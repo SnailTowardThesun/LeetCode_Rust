@@ -1,3 +1,7 @@
+
+use std::collections::HashMap;
+use std::option::Option;
+
 /**
  * 1. two sum
  * Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -9,8 +13,6 @@
  * Because nums[0] + nums[1] = 2 + 7 = 9,
  * return [0, 1].
  */
-use std::collections::HashMap;
-use std::option::Option;
 
 fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let mut v: Vec<i32> = Vec::new();
@@ -66,9 +68,7 @@ impl ListNode {
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     let mut ret = Some(Box::new(ListNode::new(0)));
-    
     let (mut p1, mut p2, mut carry) = (l1, l2, 0);
-
     let mut pos = ret.as_mut();
     while p1.is_some() || p2.is_some() {
         let mut sum = carry;
@@ -131,6 +131,59 @@ fn test_add_two_numbers() {
         }
 
     }
+}
+
+/**
+ * 3. Longest Substring Without Repeating Characters
+ * Given a string, find the length of the longest substring without repeating characters.
+ *
+ * Example 1:
+ *  Input: "abcabcbb"
+ *  Output: 3
+ *  Explanation: The answer is "abc", with the length of 3.
+ *
+ * Example 2:
+ *  Input: "bbbbb"
+ *  Output: 1
+ *  Explanation: The answer is "b", with the length of 1.
+ *
+ * Example 3:
+ *  Input: "pwwkew"
+ *  Output: 3
+ *  Explanation: The answer is "wke", with the length of 3.
+ *  Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+ */
+use std::cmp;
+
+fn length_of_longest_substring(s: String) -> i32 {
+    let mut ret: i32 = 0;
+    let mut start: i32 = -1;
+
+    let mut dic = vec![-1; 128];
+
+    let b = s.as_bytes();
+    for i in (0..s.len()) {
+        // if repeat just move the start
+        if (dic[b[i as usize] as usize] > start) {
+            start = dic[b[i as usize] as usize]
+        }
+
+        ret = std::cmp::max(ret, i as i32 - start);
+        dic[b[i as usize] as usize] = i as i32;
+    }
+
+    return ret as i32;
+}
+
+#[test]
+fn test_length_of_longest_substring() {
+    let case1 = String::from("abcabcbb");
+    let case2 = String::from("bbbbb");
+    let case3 = String::from("pwwkew");
+
+    assert_eq!(length_of_longest_substring(case1), 3);
+    assert_eq!(length_of_longest_substring(case2), 1);
+    assert_eq!(length_of_longest_substring(case3), 3);
 }
 
 fn main() {
