@@ -286,6 +286,56 @@ fn test_get_median_of_two_sored_arrays() {
     assert_eq!(2.5, get_median_of_two_sorted_arrays(demo2_num1, demo2_num2));
 }
 
+/**
+ * 5. Longest Palindromic Substring
+ * Given a string s, find the longest palindromic substring in s. You may assume that the maximum
+ * length of s is 1000.
+ *
+ * Example 1:
+ *  Input: "babad"
+ *  Output: "bab"
+ *  Note: "aba" is also a valid answer.
+ *
+ * Example 2:
+ *  Input: "cbbd"
+ *  Output: "bb"
+ */
+fn longest_palindrome(s: String) -> String {
+    let size = s.len();
+
+    if size == 0 {
+        return String::from("");
+    }
+
+    let mut flags = vec![vec![false; size]; size];
+
+    let mut start = 0;
+    let mut max = 1;
+    let b = s.as_bytes();
+
+    for i in (0..size) {
+        flags[i][i] = true;
+
+        for j in (0..i) {
+            flags[j][i] = (b[j] == b[i] && (i-j < 3 || flags[j+1][i-1]));
+            if (flags[j][i] && i - j + 1 > max) {
+                start = j;
+                max = i - j + 1;
+            }
+        }
+    }
+
+    let end = start + max;
+    return (s[start as usize..end as usize]).to_string();
+}
+
+#[test]
+fn test_longest_palindrome() {
+    let demo1 = String::from("abcda");
+    let ret = longest_palindrome(demo1);
+    assert_eq!(ret, "a");
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
