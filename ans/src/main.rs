@@ -408,6 +408,47 @@ fn test_convert() {
     assert_eq!(ret, "PAHNAPLSIIGYIR");
 }
 
+/**
+ * 7. Reverse Integer
+ * Given a 32-bit signed integer, reverse digits of an integer.
+
+ * Example 1:
+ *
+ * Input: 123
+ * Output: 321
+ *
+ * Example 2:
+ *
+ * Input: -123
+ * Output: -321
+ *
+ * Example 3:
+ *
+ * Input: 120
+ * Output: 21
+ */
+fn reverse(x: i32) -> i32 {
+    let mut num = x;
+    let mut reverse_num: i64 = 0;
+    while num != 0 {
+        reverse_num = reverse_num * 10 + (num % 10) as i64;
+        num = num / 10;
+    }
+
+    if reverse_num > std::i32::MAX as i64 || reverse_num < std::i32::MIN as i64 {
+        return 0;
+    }
+
+    return reverse_num as i32;
+}
+
+#[test]
+fn test_reverse() {
+    let demo1 = -123;
+    let ret = reverse(demo1);
+    assert_eq!(ret, -321);
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
