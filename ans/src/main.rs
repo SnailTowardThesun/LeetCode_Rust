@@ -336,6 +336,78 @@ fn test_longest_palindrome() {
     assert_eq!(ret, "a");
 }
 
+/**
+ * 6. ZigZag Conversion
+ * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+ * P   A   H   N
+ * A P L S I I G
+ * Y   I   R
+
+ * And then read line by line: "PAHNAPLSIIGYIR"
+
+ * Write the code that will take a string and make this conversion given a number of rows:
+ *
+ * string convert(string s, int numRows);
+ *
+ * Example 1:
+ *
+ * Input: s = "PAYPALISHIRING", numRows = 3
+ * Output: "PAHNAPLSIIGYIR"
+ *
+ * Example 2:
+ *
+ * Input: s = "PAYPALISHIRING", numRows = 4
+ * Output: "PINALSIGYAHRPI"
+ * Explanation:
+ *
+ * P     I    N
+ * A   L S  I G
+ * Y A   H R
+ * P     I
+ */
+fn convert(s: String, num_rows: i32) -> String {
+    if num_rows == 1 || num_rows >= s.len() as i32 {
+        return s;
+    }
+
+    let mut ret: Vec<Vec<char>> = vec![vec![]; num_rows as usize];
+
+    let mut row = 0;
+    let mut step: i32 = 1;
+
+    for c in s.chars() {
+        ret[row].push(c);
+        if row == 0 {
+            step = 1;
+        }
+
+        if row == num_rows as usize - 1 {
+            step = -1;
+        }
+
+        row = (row as i32 + step) as usize;
+    }
+
+    let mut str_ret = String::new();
+    for i in (0..num_rows) {
+        for j in &ret[i as usize] {
+            str_ret.push(*j);
+        }
+    }
+
+    return str_ret;
+}
+
+#[test]
+fn test_convert() {
+    let s = String::from("PAYPALISHIRING");
+    let row = 3;
+    let ret = convert(s, row);
+
+    assert_eq!(ret, "PAHNAPLSIIGYIR");
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
