@@ -568,6 +568,47 @@ fn test_my_atoi() {
     assert_eq!(my_atoi(s), std::i32::MAX);
 }
 
+/**
+ * 9. Palindrome Numbera
+ * Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+
+ * Example 1:
+ *
+ * Input: 121
+ * Output: true
+ * Example 2:
+ *
+ * Input: -121
+ * Output: false
+ * Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+ * Example 3:
+ *
+ * Input: 10
+ * Output: false
+ * Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+ */
+fn is_palindrome(x: i32) -> bool {
+    if x < 0 || (x != 0 && x % 10 == 0) {
+        return false;
+    }
+
+    let mut tmp: i32 = x;
+    let mut recv: i32 = 0;
+    while tmp > recv {
+        recv = recv * 10 + tmp % 10;
+        tmp = tmp / 10;
+    }
+
+    return tmp == recv || tmp == recv/10;
+}
+
+#[test]
+fn test_is_palindrome() {
+    let demo1 = 121;
+    assert_eq!(is_palindrome(demo1), true);
+    let demo2 = -121;
+    assert_eq!(is_palindrome(demo2), false);
+}
 
 fn main() {
     println!("the answer of leetcode.com using rust");
