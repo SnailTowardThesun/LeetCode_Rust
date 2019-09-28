@@ -610,6 +610,105 @@ fn test_is_palindrome() {
     assert_eq!(is_palindrome(demo2), false);
 }
 
+/**
+ * 10. Regular Expression Matching
+ * Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+
+ * '.' Matches any single character.
+ * '*' Matches zero or more of the preceding element.
+ * The matching should cover the entire input string (not partial).
+ *
+ * Note:
+ *
+ * s could be empty and contains only lowercase letters a-z.
+ * p could be empty and contains only lowercase letters a-z, and characters like . or *.
+ * Example 1:
+ *
+ * Input:
+ * s = "aa"
+ * p = "a"
+ * Output: false
+ * Explanation: "a" does not match the entire string "aa".
+ * Example 2:
+ *
+ * Input:
+ * s = "aa"
+ * p = "a*"
+ * Output: true
+ * Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+ * Example 3:
+ *
+ * Input:
+ * s = "ab"
+ * p = ".*"
+ * Output: true
+ * Explanation: ".*" means "zero or more (*) of any character (.)".
+ * Example 4:
+ *
+ * Input:
+ * s = "aab"
+ * p = "c*a*b"
+ * Output: true
+ * Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore, it matches "aab".
+ * Example 5:
+ *
+ * Input:
+ * s = "mississippi"
+ * p = "mis*is*p*."
+ * Output: false
+ */
+fn is_match_bytes(s: &[u8], p: &[u8]) -> bool {
+    match parse(p) {
+        (Pattern::Empty, _) => s.is_empty(),
+        (Pattern::Single(c), subp) => is_match_single(s, c, subp),
+        (Pattern::Repeatable(c), subp) => is_match_single(s, c, p) || is_match_bytes(s, subp),
+    }
+}
+
+fn is_match_single(s: &[u8], to_match: u8, p: &[u8]) -> bool {
+    match s.split_first() {
+        Some((c, s)) if to_match == b'.' || to_match == *c => is_match_bytes(s, p),
+        _ => false,
+    }
+}
+
+// Parser part:
+
+enum Pattern {
+    Empty,
+    Single(u8),
+    Repeatable(u8),
+}
+
+/// Returns the parsed pattern and the next pattern to parse.
+fn parse(p: &[u8]) -> (Pattern, &[u8]) {
+    match p.split_first() {
+        None => (Pattern::Empty, p),
+        Some((c, p)) => match p.split_first() {
+            Some((b'*', p)) => (Pattern::Repeatable(*c), p),
+            _ => (Pattern::Single(*c), p),
+        },
+    }
+}
+
+fn is_match(s: String, p: String) -> bool {
+    return is_match_bytes(s.as_bytes(), p.as_bytes());
+}
+
+#[test]
+fn test_is_match() {
+    {
+        let demo1 = String::from("aa");
+        let match1 = String::from("a*");
+        assert_eq!(is_match(demo1, match1), true);
+    }
+    {
+        let demo1 = String::from("aa");
+        let match1 = String::from("a");
+        assert_eq!(is_match(demo1, match1), false);
+    }
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
