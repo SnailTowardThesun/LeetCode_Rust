@@ -709,6 +709,47 @@ fn test_is_match() {
     }
 }
 
+/**
+ * 11. Container With Most Water
+ * Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai).
+ * n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find
+ * two lines, which together with x-axis forms a container, such that the container contains the
+ * most water.
+ *
+ * Note: You may not slant the container and n is at least 2.
+ * Example:
+ *
+ * Input: [1,8,6,2,5,4,8,3,7]
+ * Output: 49
+ */
+
+fn max_area(height: Vec<i32>) -> i32 {
+    let mut max = 0;
+    let mut left = 0;
+    let mut right = height.len() - 1;
+
+    while left < right {
+        let len = (right - left) as i32;
+        let h = height[left].min(height[right]);
+
+        max = max.max((len * h) as i32);
+
+        if height[left] > height[right] {
+            right -= 1;
+        } else {
+            left += 1;
+        }
+    }
+
+    return max;
+}
+
+#[test]
+fn test_max_area() {
+    let demo = vec![1,8,6,2,5,4,8,3,7];
+    assert_eq!(max_area(demo), 49);
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
