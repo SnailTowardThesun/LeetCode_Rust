@@ -838,6 +838,52 @@ fn test_int_to_roman() {
     assert_eq!(int_to_roman(1994), "MCMXCIV")
 }
 
+/**
+ * 14. Longest Common Prefix
+ * Write a function to find the longest common prefix string amongst an array of strings.
+
+ * If there is no common prefix, return an empty string "".
+ *
+ * Example 1:
+ *
+ * Input: ["flower","flow","flight"]
+ * Output: "fl"
+ * Example 2:
+ *
+ * Input: ["dog","racecar","car"]
+ * Output: ""
+ * Explanation: There is no common prefix among the input strings.
+ */
+fn longest_common_prefix(strs: Vec<String>) -> String {
+    if strs.len() == 0 {
+        return String::from("");
+    }
+
+    if strs.len() == 1 {
+        return strs[0].to_string();
+    }
+
+    let min_len = strs.iter().map(|s| s.len()).min().unwrap();
+
+    for i in 0..min_len {
+        let c = strs[0].chars().nth(i).unwrap();
+
+        for s in &strs {
+            if s.chars().nth(i).unwrap() != c {
+                return s[0..i].to_string();
+            }
+        }
+    }
+
+    return strs[0][..min_len].to_string();
+}
+
+#[test]
+fn test_logest_common_prefix() {
+    let demo = vec![String::from("flower"), String::from("flow"), String::from("flight")];
+    assert_eq!(longest_common_prefix(demo), "fl");
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
