@@ -801,18 +801,18 @@ fn test_max_area() {
 fn int_to_roman(num: i32) -> String {
     let mut num = num;
     let mut table = vec![(1, "I"),
-        (4, "IV"),
-        (5, "V"),
-        (9, "IX"),
-        (10, "X"),
-        (40, "XL"),
-        (50, "L"),
-        (90, "XC"),
-        (100, "C"),
-        (400, "CD"),
-        (500, "D"),
-        (900, "CM"),
-        (1000, "M")
+    (4, "IV"),
+    (5, "V"),
+    (9, "IX"),
+    (10, "X"),
+    (40, "XL"),
+    (50, "L"),
+    (90, "XC"),
+    (100, "C"),
+    (400, "CD"),
+    (500, "D"),
+    (900, "CM"),
+    (1000, "M")
     ];
 
     let mut ret = String::from("");
@@ -882,6 +882,128 @@ fn longest_common_prefix(strs: Vec<String>) -> String {
 fn test_logest_common_prefix() {
     let demo = vec![String::from("flower"), String::from("flow"), String::from("flight")];
     assert_eq!(longest_common_prefix(demo), "fl");
+}
+
+/**
+ * 15. 3Sum
+ * Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+ * Note:
+ *
+ * The solution set must not contain duplicate triplets.
+ *
+ * Example:
+ *
+ * Given array nums = [-1, 0, 1, 2, -1, -4],
+ *
+ * A solution set is:
+ * [
+ *   [-1, 0, 1],
+ *   [-1, -1, 2]
+ * ]
+ */
+fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
+    if nums.len() < 3 {
+        return vec![vec![]];
+    }
+
+    let mut nums = nums;
+
+    nums.sort();
+
+    let mut result: Vec<Vec<i32>> = Vec::new();
+
+    // fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+    fn two_sum_in(numbers: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+        let mut v:Vec<Vec<i32>> = Vec::new();
+
+        let mut m = HashMap::new();
+
+        for (index, value) in numbers.iter().enumerate() {
+            let num = target - *value;
+            if m.contains_key(&num) {
+                v.push(vec![m[&num], index as i32]);
+            }
+            m.insert(value, index as i32);
+        }
+
+        return v;
+    };
+
+    let pos = nums.len() - 2;
+
+    for i in 0..pos {
+        if i != 0 && nums[i] == nums[i-1] {
+            continue;
+        }
+
+        let ret = two_sum_in(nums[i+1..nums.len()].to_vec(), 0 - nums[i]);
+        if ret.len() > 0 {
+            for j in &ret {
+                println!("{} : {} : {}", nums[i], nums[i + 1 + j[0] as usize], nums[i + 1 + j[1] as usize]);
+                result.push(vec![nums[i], nums[i + 1 + j[0] as usize], nums[i + 1 + j[1] as usize]]);
+            }
+        }
+    }
+
+    return result;
+}
+
+#[test]
+fn test_three_sum() {
+    let demo = vec![-1, 0, 1, 2, -1, -4];
+    assert_eq!(three_sum(demo), vec![vec![-1, 0, 1], vec![-1, -1, 2]]);
+}
+
+/**
+ * 16. 3Sum Closest
+ * Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+ * Example:
+ *
+ * Given array nums = [-1, 2, 1, -4], and target = 1.
+ *
+ * The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+ */
+
+pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
+    if nums.len() < 3 {
+        return 0;
+    }
+
+    let mut nums = nums;
+
+    nums.sort();
+    let mut ret = nums[0] + nums[1] + nums[2];
+
+    for i in 0..(nums.len() - 2) {
+        let mut left = i + 1;
+        let mut right = nums.len() - 1;
+        while (left < right) {
+            let tmp = nums[i] + nums[left] + nums[right];
+            if tmp == target {
+                return target;
+            }
+
+            if (tmp - target).abs() < (ret -target).abs() {
+                ret = tmp;
+            }
+
+            if (tmp > target) {
+                right -= 1;
+            } else {
+                left += 1;
+            }
+        }
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_three_sum_closet() {
+    let demo = vec![-1, 2, 1, -4];
+    assert_eq!(three_sum_closest(demo,1), 2);
 }
 
 fn main() {
