@@ -119,7 +119,7 @@ fn test_add_two_numbers() {
 
     let expected_ret = [7, 0, 2, 1];
     let mut pos = ret;
-    for i in (0..expected_ret.len()) {
+    for i in 0..expected_ret.len() {
         assert_eq!(pos.is_some(), true);
         if !pos.is_some() {
             break;
@@ -162,9 +162,9 @@ fn length_of_longest_substring(s: String) -> i32 {
     let mut dic = vec![-1; 128];
 
     let b = s.as_bytes();
-    for i in (0..s.len()) {
+    for i in 0..s.len() {
         // if repeat just move the start
-        if (dic[b[i as usize] as usize] > start) {
+        if dic[b[i as usize] as usize] > start {
             start = dic[b[i as usize] as usize]
         }
 
@@ -211,7 +211,7 @@ fn get_median_of_two_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
     let short;
     let long;
 
-    if (nums1.len() <= nums2.len()) {
+    if nums1.len() <= nums2.len() {
         short = nums1;
         long = nums2;
     } else {
@@ -313,12 +313,12 @@ fn longest_palindrome(s: String) -> String {
     let mut max = 1;
     let b = s.as_bytes();
 
-    for i in (0..size) {
+    for i in 0..size {
         flags[i][i] = true;
 
-        for j in (0..i) {
+        for j in 0..i {
             flags[j][i] = (b[j] == b[i] && (i-j < 3 || flags[j+1][i-1]));
-            if (flags[j][i] && i - j + 1 > max) {
+            if flags[j][i] && i - j + 1 > max {
                 start = j;
                 max = i - j + 1;
             }
@@ -390,7 +390,7 @@ fn convert(s: String, num_rows: i32) -> String {
     }
 
     let mut str_ret = String::new();
-    for i in (0..num_rows) {
+    for i in 0..num_rows {
         for j in &ret[i as usize] {
             str_ret.push(*j);
         }
@@ -538,7 +538,7 @@ fn my_atoi(str: String) -> i32 {
         if ch >= '0' && ch <= '9' {
             is_recording = true;
             ret = ret * 10 + ch.to_digit(10).unwrap() as i64;
-            if (ret > std::i32::MAX as i64) {
+            if ret > std::i32::MAX as i64 {
                 break;
             }
             continue;
@@ -979,7 +979,7 @@ pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
     for i in 0..(nums.len() - 2) {
         let mut left = i + 1;
         let mut right = nums.len() - 1;
-        while (left < right) {
+        while left < right {
             let tmp = nums[i] + nums[left] + nums[right];
             if tmp == target {
                 return target;
@@ -989,7 +989,7 @@ pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
                 ret = tmp;
             }
 
-            if (tmp > target) {
+            if tmp > target {
                 right -= 1;
             } else {
                 left += 1;
