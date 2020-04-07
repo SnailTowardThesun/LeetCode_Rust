@@ -1006,6 +1006,61 @@ fn test_three_sum_closet() {
     assert_eq!(three_sum_closest(demo,1), 2);
 }
 
+/**
+ * 62 Unique Paths
+ * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+ * The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+ * 
+ * How many possible unique paths are there?
+ * 
+ * Example 1:
+
+ * Input: m = 3, n = 2
+ * Output: 3
+ * Explanation:
+ * From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+ * 1. Right -> Right -> Down
+ * 2. Right -> Down -> Right
+ * 3. Down -> Right -> Right
+ * 
+ * Example 2:
+ * 
+ * Input: m = 7, n = 3
+ * Output: 28
+ **/
+
+fn unique_paths(m: i32, n: i32) -> i32 {
+    let n = n as usize;
+    let m = m as usize;
+
+    let mut paths = vec![vec![0; n]; m];
+
+    for i in 0..m {
+        paths[i][0] = 1;
+    }
+
+    for j in 0..n {
+        paths[0][j] = 1;
+    }
+
+    for i in 1..m {
+        for j in 1..n {
+            paths[i][j] = paths[i-1][j] + paths[i][j-1];
+        }
+    }
+
+    return paths[m-1][n-1] as i32;        
+}
+
+#[test]
+fn test_unique_paths() {
+    let m = 7;
+    let n = 3;
+
+    assert_eq!(unique_paths(m, n), 28)
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
