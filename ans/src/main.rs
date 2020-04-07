@@ -1061,6 +1061,53 @@ fn test_unique_paths() {
     assert_eq!(unique_paths(m, n), 28)
 }
 
+/**
+ * 64. Minimum Path Sum
+ * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+ * Note: You can only move either down or right at any point in time.
+
+ * Example:
+ * 
+ * Input:
+ * [
+ *   [1,3,1],
+ *   [1,5,1],
+ *   [4,2,1]
+ * ]
+ * Output: 7
+ * Explanation: Because the path 1→3→1→1→1 minimizes the sum.
+ */
+
+fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {
+    let grid = grid;
+
+    let m = grid.len();
+    let n = grid[0].len();
+
+    let mut min_paths = grid;
+    for i in 1..m {
+        min_paths[i][0] = min_paths[i-1][0] + min_paths[i][0];
+    }
+
+    for i in 1..n {
+        min_paths[0][i] = min_paths[0][i-1] + min_paths[0][i];
+    }
+
+    for i in 1..m {
+        for j in 1..n {
+            min_paths[i][j] = min_paths[i][j] + cmp::min(min_paths[i-1][j], min_paths[i][j-1]);
+        }
+    }
+
+    return min_paths[m - 1][n - 1]; 
+}
+
+#[test]
+fn test_in_path_sum() {
+    let grid:Vec<Vec<i32>> = vec![vec![1,3,1], vec![1,5,1], vec![4,2,1]];
+    assert_eq!(min_path_sum(grid), 7);
+}
+
 fn main() {
     println!("the answer of leetcode.com using rust");
 }
