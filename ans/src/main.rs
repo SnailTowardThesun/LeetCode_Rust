@@ -1,18 +1,17 @@
-
 use std::collections::HashMap;
 use std::option::Option;
 
 /**
- * 1. two sum
- * Given an array of integers, return indices of the two numbers such that they add up to a specific target.
- * You may assume that each input would have exactly one solution, and you may not use the same element twice.
- *
- * Example:
- * Given nums = [2, 7, 11, 15], target = 9,
+* 1. two sum
+* Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+* You may assume that each input would have exactly one solution, and you may not use the same element twice.
+*
+* Example:
+* Given nums = [2, 7, 11, 15], target = 9,
 
- * Because nums[0] + nums[1] = 2 + 7 = 9,
- * return [0, 1].
- */
+* Because nums[0] + nums[1] = 2 + 7 = 9,
+* return [0, 1].
+*/
 
 fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let mut v: Vec<i32> = Vec::new();
@@ -53,16 +52,13 @@ fn test_two_sum() {
  */
 struct ListNode {
     pub val: i32,
-    pub next: Option<Box<ListNode>>
+    pub next: Option<Box<ListNode>>,
 }
 
 impl ListNode {
     #[inline]
     fn new(val: i32) -> Self {
-        ListNode {
-            next: None,
-            val
-        }
+        ListNode { next: None, val }
     }
 }
 
@@ -109,7 +105,7 @@ fn test_add_two_numbers() {
 
     let mut l1 = Box::new(ListNode::new(2));
     l1.next = Some(Box::new(ListNode::new(4)));
-    l1.next.as_mut().unwrap().next= Some(Box::new(ListNode::new(7)));
+    l1.next.as_mut().unwrap().next = Some(Box::new(ListNode::new(7)));
 
     let mut l2 = Box::new(ListNode::new(5));
     l2.next = Some(Box::new(ListNode::new(6)));
@@ -129,7 +125,6 @@ fn test_add_two_numbers() {
             assert_eq!(v.val, expected_ret[i]);
             pos = v.next;
         }
-
     }
 }
 
@@ -313,11 +308,11 @@ fn longest_palindrome(s: String) -> String {
     let mut max = 1;
     let b = s.as_bytes();
 
-    for i in 0..size {
+    for i in 1..size {
         flags[i][i] = true;
 
         for j in 0..i {
-            flags[j][i] = (b[j] == b[i] && (i-j < 3 || flags[j+1][i-1]));
+            flags[j][i] = (b[j] == b[i] && (i - j < 3 || flags[j + 1][i - 1]));
             if flags[j][i] && i - j + 1 > max {
                 start = j;
                 max = i - j + 1;
@@ -331,41 +326,41 @@ fn longest_palindrome(s: String) -> String {
 
 #[test]
 fn test_longest_palindrome() {
-    let demo1 = String::from("abcda");
+    let demo1 = String::from("cbbd");
     let ret = longest_palindrome(demo1);
-    assert_eq!(ret, "a");
+    assert_eq!(ret, "bb");
 }
 
 /**
- * 6. ZigZag Conversion
- * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+* 6. ZigZag Conversion
+* The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
 
- * P   A   H   N
- * A P L S I I G
- * Y   I   R
+* P   A   H   N
+* A P L S I I G
+* Y   I   R
 
- * And then read line by line: "PAHNAPLSIIGYIR"
+* And then read line by line: "PAHNAPLSIIGYIR"
 
- * Write the code that will take a string and make this conversion given a number of rows:
- *
- * string convert(string s, int numRows);
- *
- * Example 1:
- *
- * Input: s = "PAYPALISHIRING", numRows = 3
- * Output: "PAHNAPLSIIGYIR"
- *
- * Example 2:
- *
- * Input: s = "PAYPALISHIRING", numRows = 4
- * Output: "PINALSIGYAHRPI"
- * Explanation:
- *
- * P     I    N
- * A   L S  I G
- * Y A   H R
- * P     I
- */
+* Write the code that will take a string and make this conversion given a number of rows:
+*
+* string convert(string s, int numRows);
+*
+* Example 1:
+*
+* Input: s = "PAYPALISHIRING", numRows = 3
+* Output: "PAHNAPLSIIGYIR"
+*
+* Example 2:
+*
+* Input: s = "PAYPALISHIRING", numRows = 4
+* Output: "PINALSIGYAHRPI"
+* Explanation:
+*
+* P     I    N
+* A   L S  I G
+* Y A   H R
+* P     I
+*/
 fn convert(s: String, num_rows: i32) -> String {
     if num_rows == 1 || num_rows >= s.len() as i32 {
         return s;
@@ -409,24 +404,24 @@ fn test_convert() {
 }
 
 /**
- * 7. Reverse Integer
- * Given a 32-bit signed integer, reverse digits of an integer.
+* 7. Reverse Integer
+* Given a 32-bit signed integer, reverse digits of an integer.
 
- * Example 1:
- *
- * Input: 123
- * Output: 321
- *
- * Example 2:
- *
- * Input: -123
- * Output: -321
- *
- * Example 3:
- *
- * Input: 120
- * Output: 21
- */
+* Example 1:
+*
+* Input: 123
+* Output: 321
+*
+* Example 2:
+*
+* Input: -123
+* Output: -321
+*
+* Example 3:
+*
+* Input: 120
+* Output: 21
+*/
 fn reverse(x: i32) -> i32 {
     let mut num = x;
     let mut reverse_num: i64 = 0;
@@ -450,53 +445,53 @@ fn test_reverse() {
 }
 
 /**
- * 8. String to Integer (atoi)
- * Implement atoi which converts a string to an integer.
+* 8. String to Integer (atoi)
+* Implement atoi which converts a string to an integer.
 
- * The function first discards as many whitespace characters as necessary until the first non-whitespace character is found.
- * Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
- *
- * The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
- *
- * If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
- *
- * If no valid conversion could be performed, a zero value is returned.
- *
- * Note:
- *
- * Only the space character ' ' is considered as whitespace character.
- * Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1].
- * If the numerical value is out of the range of representable values, INT_MAX (231 − 1) or INT_MIN (−231) is returned.
- * Example 1:
- *
- * Input: "42"
- * Output: 42
- * Example 2:
- *
- * Input: "   -42"
- * Output: -42
- * Explanation: The first non-whitespace character is '-', which is the minus sign.
- *              Then take as many numerical digits as possible, which gets 42.
- * Example 3:
- *
- * Input: "4193 with words"
- * Output: 4193
- * Explanation: Conversion stops at digit '3' as the next character is not a numerical digit.
- * Example 4:
- *
- * Input: "words and 987"
- * Output: 0
- * Explanation: The first non-whitespace character is 'w', which is not a numerical
- *              digit or a +/- sign. Therefore no valid conversion could be performed.
- * Example 5:
- *
- * Input: "-91283472332"
- * Output: -2147483648
- * Explanation: The number "-91283472332" is out of the range of a 32-bit signed integer.
- *              Thefore INT_MIN (−231) is returned.
- */
+* The function first discards as many whitespace characters as necessary until the first non-whitespace character is found.
+* Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
+*
+* The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+*
+* If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+*
+* If no valid conversion could be performed, a zero value is returned.
+*
+* Note:
+*
+* Only the space character ' ' is considered as whitespace character.
+* Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1].
+* If the numerical value is out of the range of representable values, INT_MAX (231 − 1) or INT_MIN (−231) is returned.
+* Example 1:
+*
+* Input: "42"
+* Output: 42
+* Example 2:
+*
+* Input: "   -42"
+* Output: -42
+* Explanation: The first non-whitespace character is '-', which is the minus sign.
+*              Then take as many numerical digits as possible, which gets 42.
+* Example 3:
+*
+* Input: "4193 with words"
+* Output: 4193
+* Explanation: Conversion stops at digit '3' as the next character is not a numerical digit.
+* Example 4:
+*
+* Input: "words and 987"
+* Output: 0
+* Explanation: The first non-whitespace character is 'w', which is not a numerical
+*              digit or a +/- sign. Therefore no valid conversion could be performed.
+* Example 5:
+*
+* Input: "-91283472332"
+* Output: -2147483648
+* Explanation: The number "-91283472332" is out of the range of a 32-bit signed integer.
+*              Thefore INT_MIN (−231) is returned.
+*/
 fn my_atoi(str: String) -> i32 {
-    let mut ret: i64  = 0;
+    let mut ret: i64 = 0;
     let mut is_recording: bool = false;
     let mut is_positive_or_negative_sign_apper: bool = false;
     let mut is_negative: bool = false;
@@ -510,7 +505,6 @@ fn my_atoi(str: String) -> i32 {
         }
 
         if ch == '-' {
-
             if is_positive_or_negative_sign_apper {
                 break;
             }
@@ -569,24 +563,24 @@ fn test_my_atoi() {
 }
 
 /**
- * 9. Palindrome Numbera
- * Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+* 9. Palindrome Numbera
+* Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
 
- * Example 1:
- *
- * Input: 121
- * Output: true
- * Example 2:
- *
- * Input: -121
- * Output: false
- * Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
- * Example 3:
- *
- * Input: 10
- * Output: false
- * Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
- */
+* Example 1:
+*
+* Input: 121
+* Output: true
+* Example 2:
+*
+* Input: -121
+* Output: false
+* Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+* Example 3:
+*
+* Input: 10
+* Output: false
+* Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+*/
 fn is_palindrome(x: i32) -> bool {
     if x < 0 || (x != 0 && x % 10 == 0) {
         return false;
@@ -599,7 +593,7 @@ fn is_palindrome(x: i32) -> bool {
         tmp = tmp / 10;
     }
 
-    return tmp == recv || tmp == recv/10;
+    return tmp == recv || tmp == recv / 10;
 }
 
 #[test]
@@ -611,52 +605,52 @@ fn test_is_palindrome() {
 }
 
 /**
- * 10. Regular Expression Matching
- * Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+* 10. Regular Expression Matching
+* Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
 
- * '.' Matches any single character.
- * '*' Matches zero or more of the preceding element.
- * The matching should cover the entire input string (not partial).
- *
- * Note:
- *
- * s could be empty and contains only lowercase letters a-z.
- * p could be empty and contains only lowercase letters a-z, and characters like . or *.
- * Example 1:
- *
- * Input:
- * s = "aa"
- * p = "a"
- * Output: false
- * Explanation: "a" does not match the entire string "aa".
- * Example 2:
- *
- * Input:
- * s = "aa"
- * p = "a*"
- * Output: true
- * Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
- * Example 3:
- *
- * Input:
- * s = "ab"
- * p = ".*"
- * Output: true
- * Explanation: ".*" means "zero or more (*) of any character (.)".
- * Example 4:
- *
- * Input:
- * s = "aab"
- * p = "c*a*b"
- * Output: true
- * Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore, it matches "aab".
- * Example 5:
- *
- * Input:
- * s = "mississippi"
- * p = "mis*is*p*."
- * Output: false
- */
+* '.' Matches any single character.
+* '*' Matches zero or more of the preceding element.
+* The matching should cover the entire input string (not partial).
+*
+* Note:
+*
+* s could be empty and contains only lowercase letters a-z.
+* p could be empty and contains only lowercase letters a-z, and characters like . or *.
+* Example 1:
+*
+* Input:
+* s = "aa"
+* p = "a"
+* Output: false
+* Explanation: "a" does not match the entire string "aa".
+* Example 2:
+*
+* Input:
+* s = "aa"
+* p = "a*"
+* Output: true
+* Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+* Example 3:
+*
+* Input:
+* s = "ab"
+* p = ".*"
+* Output: true
+* Explanation: ".*" means "zero or more (*) of any character (.)".
+* Example 4:
+*
+* Input:
+* s = "aab"
+* p = "c*a*b"
+* Output: true
+* Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore, it matches "aab".
+* Example 5:
+*
+* Input:
+* s = "mississippi"
+* p = "mis*is*p*."
+* Output: false
+*/
 fn is_match_bytes(s: &[u8], p: &[u8]) -> bool {
     match parse(p) {
         (Pattern::Empty, _) => s.is_empty(),
@@ -746,74 +740,75 @@ fn max_area(height: Vec<i32>) -> i32 {
 
 #[test]
 fn test_max_area() {
-    let demo = vec![1,8,6,2,5,4,8,3,7];
+    let demo = vec![1, 8, 6, 2, 5, 4, 8, 3, 7];
     assert_eq!(max_area(demo), 49);
 }
 
 /**
- * 12. Integer to Roman
- * Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+* 12. Integer to Roman
+* Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 
- * Symbol       Value
- * I             1
- * V             5
- * X             10
- * L             50
- * C             100
- * D             500
- * M             1000
- * For example, two is written as II in Roman numeral, just two one's added together.
- * Twelve is written as, XII, which is simply X + II. The number twenty seven is written as XXVII, which is XX + V + II.
- *
- * Roman numerals are usually written largest to smallest from left to right.
- * However, the numeral for four is not IIII. Instead, the number four is written as IV.
- * Because the one is before the five we subtract it making four.
- * The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
- *
- * I can be placed before V (5) and X (10) to make 4 and 9.
- * X can be placed before L (50) and C (100) to make 40 and 90.
- * C can be placed before D (500) and M (1000) to make 400 and 900.
- * Given an integer, convert it to a roman numeral. Input is guaranteed to be within the range from 1 to 3999.
- *
- * Example 1:
- *
- * Input: 3
- * Output: "III"
- * Example 2:
- *
- * Input: 4
- * Output: "IV"
- * Example 3:
- *
- * Input: 9
- * Output: "IX"
- * Example 4:
- *
- * Input: 58
- * Output: "LVIII"
- * Explanation: L = 50, V = 5, III = 3.
- * Example 5:
- *
- * Input: 1994
- * Output: "MCMXCIV"
- * Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
- */
+* Symbol       Value
+* I             1
+* V             5
+* X             10
+* L             50
+* C             100
+* D             500
+* M             1000
+* For example, two is written as II in Roman numeral, just two one's added together.
+* Twelve is written as, XII, which is simply X + II. The number twenty seven is written as XXVII, which is XX + V + II.
+*
+* Roman numerals are usually written largest to smallest from left to right.
+* However, the numeral for four is not IIII. Instead, the number four is written as IV.
+* Because the one is before the five we subtract it making four.
+* The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
+*
+* I can be placed before V (5) and X (10) to make 4 and 9.
+* X can be placed before L (50) and C (100) to make 40 and 90.
+* C can be placed before D (500) and M (1000) to make 400 and 900.
+* Given an integer, convert it to a roman numeral. Input is guaranteed to be within the range from 1 to 3999.
+*
+* Example 1:
+*
+* Input: 3
+* Output: "III"
+* Example 2:
+*
+* Input: 4
+* Output: "IV"
+* Example 3:
+*
+* Input: 9
+* Output: "IX"
+* Example 4:
+*
+* Input: 58
+* Output: "LVIII"
+* Explanation: L = 50, V = 5, III = 3.
+* Example 5:
+*
+* Input: 1994
+* Output: "MCMXCIV"
+* Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+*/
 
 fn int_to_roman(num: i32) -> String {
     let mut num = num;
-    let mut table = vec![(1, "I"),
-    (4, "IV"),
-    (5, "V"),
-    (9, "IX"),
-    (10, "X"),
-    (40, "XL"),
-    (50, "L"),
-    (90, "XC"),
-    (100, "C"),
-    (400, "CD"),
-    (500, "D"),
-    (900, "CM"),
-    (1000, "M")
+    let mut table = vec![
+        (1, "I"),
+        (4, "IV"),
+        (5, "V"),
+        (9, "IX"),
+        (10, "X"),
+        (40, "XL"),
+        (50, "L"),
+        (90, "XC"),
+        (100, "C"),
+        (400, "CD"),
+        (500, "D"),
+        (900, "CM"),
+        (1000, "M"),
     ];
 
     let mut ret = String::from("");
@@ -851,33 +846,33 @@ fn test_int_to_roman() {
  * D             500
  * M             1000
  * For example, two is written as II in Roman numeral, just two one's added together. Twelve is written as, XII, which is simply X + II. The number twenty seven is written as XXVII, which is XX + V + II.
- * 
+ *
  * Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
- * 
- * I can be placed before V (5) and X (10) to make 4 and 9. 
- * X can be placed before L (50) and C (100) to make 40 and 90. 
+ *
+ * I can be placed before V (5) and X (10) to make 4 and 9.
+ * X can be placed before L (50) and C (100) to make 40 and 90.
  * C can be placed before D (500) and M (1000) to make 400 and 900.
  * Given a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999.
- * 
+ *
  * Example 1:
- * 
+ *
  * Input: "III"
  * Output: 3
  * Example 2:
- * 
+ *
  * Input: "IV"
  * Output: 4
  * Example 3:
- * 
+ *
  * Input: "IX"
  * Output: 9
  * Example 4:
- * 
+ *
  * Input: "LVIII"
  * Output: 58
  * Explanation: L = 50, V= 5, III = 3.
  * Example 5:
- * 
+ *
  * Input: "MCMXCIV"
  * Output: 1994
  * Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
@@ -916,21 +911,21 @@ fn test_roman_to_int() {
 }
 
 /**
- * 14. Longest Common Prefix
- * Write a function to find the longest common prefix string amongst an array of strings.
+* 14. Longest Common Prefix
+* Write a function to find the longest common prefix string amongst an array of strings.
 
- * If there is no common prefix, return an empty string "".
- *
- * Example 1:
- *
- * Input: ["flower","flow","flight"]
- * Output: "fl"
- * Example 2:
- *
- * Input: ["dog","racecar","car"]
- * Output: ""
- * Explanation: There is no common prefix among the input strings.
- */
+* If there is no common prefix, return an empty string "".
+*
+* Example 1:
+*
+* Input: ["flower","flow","flight"]
+* Output: "fl"
+* Example 2:
+*
+* Input: ["dog","racecar","car"]
+* Output: ""
+* Explanation: There is no common prefix among the input strings.
+*/
 fn longest_common_prefix(strs: Vec<String>) -> String {
     if strs.len() == 0 {
         return String::from("");
@@ -957,28 +952,32 @@ fn longest_common_prefix(strs: Vec<String>) -> String {
 
 #[test]
 fn test_logest_common_prefix() {
-    let demo = vec![String::from("flower"), String::from("flow"), String::from("flight")];
+    let demo = vec![
+        String::from("flower"),
+        String::from("flow"),
+        String::from("flight"),
+    ];
     assert_eq!(longest_common_prefix(demo), "fl");
 }
 
 /**
- * 15. 3Sum
- * Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+* 15. 3Sum
+* Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 
- * Note:
- *
- * The solution set must not contain duplicate triplets.
- *
- * Example:
- *
- * Given array nums = [-1, 0, 1, 2, -1, -4],
- *
- * A solution set is:
- * [
- *   [-1, 0, 1],
- *   [-1, -1, 2]
- * ]
- */
+* Note:
+*
+* The solution set must not contain duplicate triplets.
+*
+* Example:
+*
+* Given array nums = [-1, 0, 1, 2, -1, -4],
+*
+* A solution set is:
+* [
+*   [-1, 0, 1],
+*   [-1, -1, 2]
+* ]
+*/
 fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
     if nums.len() < 3 {
         return vec![vec![]];
@@ -992,7 +991,7 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
 
     // fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     fn two_sum_in(numbers: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
-        let mut v:Vec<Vec<i32>> = Vec::new();
+        let mut v: Vec<Vec<i32>> = Vec::new();
 
         let mut m = HashMap::new();
 
@@ -1010,15 +1009,24 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
     let pos = nums.len() - 2;
 
     for i in 0..pos {
-        if i != 0 && nums[i] == nums[i-1] {
+        if i != 0 && nums[i] == nums[i - 1] {
             continue;
         }
 
-        let ret = two_sum_in(nums[i+1..nums.len()].to_vec(), 0 - nums[i]);
+        let ret = two_sum_in(nums[i + 1..nums.len()].to_vec(), 0 - nums[i]);
         if ret.len() > 0 {
             for j in &ret {
-                println!("{} : {} : {}", nums[i], nums[i + 1 + j[0] as usize], nums[i + 1 + j[1] as usize]);
-                result.push(vec![nums[i], nums[i + 1 + j[0] as usize], nums[i + 1 + j[1] as usize]]);
+                println!(
+                    "{} : {} : {}",
+                    nums[i],
+                    nums[i + 1 + j[0] as usize],
+                    nums[i + 1 + j[1] as usize]
+                );
+                result.push(vec![
+                    nums[i],
+                    nums[i + 1 + j[0] as usize],
+                    nums[i + 1 + j[1] as usize],
+                ]);
             }
         }
     }
@@ -1033,15 +1041,15 @@ fn test_three_sum() {
 }
 
 /**
- * 16. 3Sum Closest
- * Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+* 16. 3Sum Closest
+* Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
 
- * Example:
- *
- * Given array nums = [-1, 2, 1, -4], and target = 1.
- *
- * The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
- */
+* Example:
+*
+* Given array nums = [-1, 2, 1, -4], and target = 1.
+*
+* The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+*/
 
 pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
     if nums.len() < 3 {
@@ -1062,7 +1070,7 @@ pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
                 return target;
             }
 
-            if (tmp - target).abs() < (ret -target).abs() {
+            if (tmp - target).abs() < (ret - target).abs() {
                 ret = tmp;
             }
 
@@ -1080,32 +1088,50 @@ pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
 #[test]
 fn test_three_sum_closet() {
     let demo = vec![-1, 2, 1, -4];
-    assert_eq!(three_sum_closest(demo,1), 2);
+    assert_eq!(three_sum_closest(demo, 1), 2);
 }
 
 /**
- * 62 Unique Paths
- * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+* 17. Letter Combinations of a phone number
+* Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+* A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+* Example 1:
 
- * The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
- * 
- * How many possible unique paths are there?
- * 
- * Example 1:
+* Input: digits = "23"
+* Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+* Example 2:
+*
+* Input: digits = ""
+* Output: []
+* Example 3:
+*
+* Input: digits = "2"
+* Output: ["a","b","c"]
+*/
 
- * Input: m = 3, n = 2
- * Output: 3
- * Explanation:
- * From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
- * 1. Right -> Right -> Down
- * 2. Right -> Down -> Right
- * 3. Down -> Right -> Right
- * 
- * Example 2:
- * 
- * Input: m = 7, n = 3
- * Output: 28
- **/
+/**
+* 62 Unique Paths
+* A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+* The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+*
+* How many possible unique paths are there?
+*
+* Example 1:
+
+* Input: m = 3, n = 2
+* Output: 3
+* Explanation:
+* From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+* 1. Right -> Right -> Down
+* 2. Right -> Down -> Right
+* 3. Down -> Right -> Right
+*
+* Example 2:
+*
+* Input: m = 7, n = 3
+* Output: 28
+**/
 
 fn unique_paths(m: i32, n: i32) -> i32 {
     let n = n as usize;
@@ -1123,11 +1149,11 @@ fn unique_paths(m: i32, n: i32) -> i32 {
 
     for i in 1..m {
         for j in 1..n {
-            paths[i][j] = paths[i-1][j] + paths[i][j-1];
+            paths[i][j] = paths[i - 1][j] + paths[i][j - 1];
         }
     }
 
-    return paths[m-1][n-1] as i32;        
+    return paths[m - 1][n - 1] as i32;
 }
 
 #[test]
@@ -1139,21 +1165,21 @@ fn test_unique_paths() {
 }
 
 /**
- * 64. Minimum Path Sum
- * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
- * Note: You can only move either down or right at any point in time.
+* 64. Minimum Path Sum
+* Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+* Note: You can only move either down or right at any point in time.
 
- * Example:
- * 
- * Input:
- * [
- *   [1,3,1],
- *   [1,5,1],
- *   [4,2,1]
- * ]
- * Output: 7
- * Explanation: Because the path 1→3→1→1→1 minimizes the sum.
- */
+* Example:
+*
+* Input:
+* [
+*   [1,3,1],
+*   [1,5,1],
+*   [4,2,1]
+* ]
+* Output: 7
+* Explanation: Because the path 1→3→1→1→1 minimizes the sum.
+*/
 
 fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {
     let grid = grid;
@@ -1163,76 +1189,70 @@ fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {
 
     let mut min_paths = grid;
     for i in 1..m {
-        min_paths[i][0] = min_paths[i-1][0] + min_paths[i][0];
+        min_paths[i][0] = min_paths[i - 1][0] + min_paths[i][0];
     }
 
     for i in 1..n {
-        min_paths[0][i] = min_paths[0][i-1] + min_paths[0][i];
+        min_paths[0][i] = min_paths[0][i - 1] + min_paths[0][i];
     }
 
     for i in 1..m {
         for j in 1..n {
-            min_paths[i][j] = min_paths[i][j] + cmp::min(min_paths[i-1][j], min_paths[i][j-1]);
+            min_paths[i][j] = min_paths[i][j] + cmp::min(min_paths[i - 1][j], min_paths[i][j - 1]);
         }
     }
 
-    return min_paths[m - 1][n - 1]; 
+    return min_paths[m - 1][n - 1];
 }
 
 #[test]
 fn test_in_path_sum() {
-    let grid:Vec<Vec<i32>> = vec![vec![1,3,1], vec![1,5,1], vec![4,2,1]];
+    let grid: Vec<Vec<i32>> = vec![vec![1, 3, 1], vec![1, 5, 1], vec![4, 2, 1]];
     assert_eq!(min_path_sum(grid), 7);
 }
 
 /**
- * 72. Edit Distance
- * Given two words word1 and word2, find the minimum number of operations required to convert word1 to word2.
+* 72. Edit Distance
+* Given two words word1 and word2, find the minimum number of operations required to convert word1 to word2.
 
- * You have the following 3 operations permitted on a word:
- * 
- * Insert a character
- * Delete a character
- * Replace a character
- * Example 1:
- * 
- * Input: word1 = "horse", word2 = "ros"
- * Output: 3
- * Explanation: 
- * horse -> rorse (replace 'h' with 'r')
- * rorse -> rose (remove 'r')
- * rose -> ros (remove 'e')
- * Example 2:
- * 
- * Input: word1 = "intention", word2 = "execution"
- * Output: 5
- * Explanation: 
- * intention -> inention (remove 't')
- * inention -> enention (replace 'i' with 'e')
- * enention -> exention (replace 'n' with 'x')
- * exention -> exection (replace 'n' with 'c')
- * exection -> execution (insert 'u')
- **/
+* You have the following 3 operations permitted on a word:
+*
+* Insert a character
+* Delete a character
+* Replace a character
+* Example 1:
+*
+* Input: word1 = "horse", word2 = "ros"
+* Output: 3
+* Explanation:
+* horse -> rorse (replace 'h' with 'r')
+* rorse -> rose (remove 'r')
+* rose -> ros (remove 'e')
+* Example 2:
+*
+* Input: word1 = "intention", word2 = "execution"
+* Output: 5
+* Explanation:
+* intention -> inention (remove 't')
+* inention -> enention (replace 'i' with 'e')
+* enention -> exention (replace 'n' with 'x')
+* exention -> exection (replace 'n' with 'c')
+* exection -> execution (insert 'u')
+**/
 
 fn min_distance(word1: String, word2: String) -> i32 {
     let mut n = word1.len();
     let mut m = word2.len();
 
-    let mut steps = vec![vec![0; n+1]; m+1];
+    let mut steps = vec![vec![0; n + 1]; m + 1];
 
-    for i in 0..m+1 {
+    for i in 0..m + 1 {
         steps[i][0] = i;
     }
 
-    for i in 0..n+1 {
+    for i in 0..n + 1 {
         steps[0][i] = i;
     }
-
-    for i in 0..m+1 {
-        println!("{:?}", steps[i]);
-    }
-    println!("");
-    println!("");
 
     let b1 = word1.as_bytes();
     let b2 = word2.as_bytes();
@@ -1240,32 +1260,163 @@ fn min_distance(word1: String, word2: String) -> i32 {
     for i in 0..m {
         for j in 0..n {
             if b1[j] == b2[i] {
-                steps[i+1][j+1] = steps[i][j];
+                steps[i + 1][j + 1] = steps[i][j];
             } else {
-                steps[i+1][j+1] = std::cmp::min(std::cmp::min(steps[i][j], steps[i+1][j]), steps[i][j+1]) + 1;
+                steps[i + 1][j + 1] =
+                    std::cmp::min(std::cmp::min(steps[i][j], steps[i + 1][j]), steps[i][j + 1]) + 1;
             }
-
         }
 
-        for i in 0..m+1 {
+        for i in 0..m + 1 {
             println!("{:?}", steps[i]);
         }
 
-        println!("");
+        println!("\t");
     }
-
-
-    return steps[m][n] as i32;    
+    return steps[m][n] as i32;
 }
 
 #[test]
 fn test_min_distance() {
-    let word1 = String::from("horse");
-    let word2 = String::from("ros");
+    let word1 = String::from("intention");
+    let word2 = String::from("execution");
 
-    assert_eq!(min_distance(word1, word2 ), 3);
+    assert_eq!(min_distance(word1, word2), 5);
+}
+
+use std::rc::Rc;
+use std::cell::RefCell;
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct TreeNode {
+    pub val: i32,
+    pub left: Option<Rc<RefCell<TreeNode>>>,
+    pub right: Option<Rc<RefCell<TreeNode>>>,
+}
+
+impl TreeNode {
+    #[inline]
+    pub fn new(val: i32) -> Self {
+        TreeNode {
+            val,
+            left: None,
+            right: None,
+        }
+    }
+}
+
+/*
+ * 94. binary tree inorder traversal
+ */
+fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+    fn do_inorder(r: &mut Option<Rc<RefCell<TreeNode>>>, a: &mut Vec<i32>) {
+        if let Some(n) = r {
+            let mut n = n.borrow_mut();
+            do_inorder(&mut n.left, a);
+            a.push(n.val);
+            do_inorder(&mut n.right, a);
+        }
+    }
+    let mut root = root;
+    let mut res = vec![];
+    do_inorder(&mut root, &mut res);
+    return res;
+}
+
+#[test]
+fn test_inorder_traversal() {}
+
+/*
+ * 98. Validate Binary Search Tree
+ */
+fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+    fn valid(node: Option<Rc<RefCell<TreeNode>>>, max: i64, min: i64) -> bool {
+        if let Some(node) = node {
+            if node.borrow().val as i64 <= min || node.borrow().val as i64 >= max {
+                return false;
+            }
+            return valid(node.borrow().left.clone(), min, node.borrow().val as i64) &&
+                valid(node.borrow().right.clone(), node.borrow().val as i64, max);
+        }
+        true
+    }
+    valid(root, std::i64::MIN, std::i64::MAX)
+}
+
+#[test]
+fn test_unique_binary_search_trees_II() {}
+
+/*
+ * 100. same tree
+ */
+fn same_tree(p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> bool {
+    match (p, q) {
+        (None, None) => true,
+        (Some(p), Some(q)) => {
+            let p = p.borrow();
+            let q = q.borrow();
+            p.val == q.val && same_tree(p.left.clone(), q.left.clone()) && same_tree(p.right.clone(), q.right.clone())
+        }
+        _ => false,
+    }
+}
+
+#[test]
+fn test_same_tree() {
+    let mut p = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    let mut q = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    assert_eq!(true, same_tree(p, q));
+}
+
+/*
+ * 101. Symmetric Tree
+ */
+fn symmetric_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+    type Rn = Rc<RefCell<TreeNode>>;
+
+    fn f(p: Option<&Rn>, q: Option<&Rn>) -> bool {
+        match (p, q) {
+            (None, None) => true,
+            (Some(p), Some(q)) => {
+                let p = p.borrow();
+                let q = q.borrow();
+                p.val == q.val
+                    && f(p.left.as_ref(), q.right.as_ref())
+                    && f(p.right.as_ref(), q.left.as_ref())
+            }
+            _ => false,
+        }
+    }
+
+    match root {
+        None => true,
+        Some(n) => {
+            let n = n.borrow();
+            f(n.left.as_ref(), n.right.as_ref())
+        }
+    }
+}
+
+#[test]
+fn test_symmetric_tree() {
+    let root = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    symmetric_tree(root);
+}
+
+/*
+ * 102. binary tree level order traversal
+ */
+fn binary_tree_level_order(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
+    let res = vec![];
+    return res;
+}
+
+#[test]
+fn test_binary_tree_level_order() {
+    let root = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    binary_tree_level_order(root);
 }
 
 fn main() {
-    println!("the answer of leetcode.com using rust");
+    println!("hello ans");
 }
