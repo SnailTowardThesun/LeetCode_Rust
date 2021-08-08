@@ -226,26 +226,26 @@ fn get_median_of_two_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
 
         // get the value in short array
         let short_left = if part_x == 0 {
-            std::i32::MIN
+            i32::MIN
         } else {
             short[part_x - 1]
         };
 
         let short_right = if part_x == short.len() {
-            std::i32::MAX
+            i32::MAX
         } else {
             short[part_x]
         };
 
         // get the value in long array
         let long_left = if part_y == 0 {
-            std::i32::MIN
+            i32::MIN
         } else {
             long[part_y - 1]
         };
 
         let long_right = if part_y == long.len() {
-            std::i32::MAX
+            i32::MAX
         } else {
             long[part_y]
         };
@@ -1004,7 +1004,7 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
         }
 
         return v;
-    };
+    }
 
     let pos = nums.len() - 2;
 
@@ -1327,6 +1327,48 @@ fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
 fn test_inorder_traversal() {}
 
 /*
+ * 95. Unique Binary Search Trees II
+ * Given an integer n, return all the structurally unique binary search trees, which has exactly n nodes of unique values from 1 to n. Return the answer in any order.
+ */
+fn get_all_unique_binary_search_trees(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+    let mut ret = vec![];
+
+    fn helper(l: i32, r: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+        if l > r {
+            return vec![None];
+        }
+
+        let mut res = vec![];
+        for i in l..r + 1 {
+            let l_nodes = helper(l, i - 1);
+            let r_nodes = helper(i + 1, r);
+            for ln in l_nodes.iter() {
+                for rn in r_nodes.iter() {
+                    let node = Some(Rc::new(RefCell::new(TreeNode {
+                        val: i,
+                        left: ln.clone(),
+                        right: rn.clone(),
+                    })));
+                    res.push(node);
+                }
+            }
+        }
+
+        return res
+    }
+
+    ret = helper(1, n);
+
+    return ret
+}
+
+#[test]
+fn test_get_alL_unique_binary_search_trees() {
+    get_all_unique_binary_search_trees(5);
+}
+
+
+/*
  * 98. Validate Binary Search Tree
  */
 fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
@@ -1404,18 +1446,64 @@ fn test_symmetric_tree() {
 }
 
 /*
- * 102. binary tree level order traversal
+ * 108. convert sorted array into binary search tree
  */
-fn binary_tree_level_order(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
-    let res = vec![];
-    return res;
+
+fn convert_sorted_array_into_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+    if nums.is_empty() {
+        return None;
+    }
+
+    let mid = nums.len() / 2;
+    let mut root = Rc::new(RefCell::new(TreeNode::new(nums[mid])));
+    root.borrow_mut().left = convert_sorted_array_into_bst(nums[..mid].to_vec());
+    root.borrow_mut().right = convert_sorted_array_into_bst(nums[mid + 1..].to_vec());
+
+
+    return Some(root);
 }
 
 #[test]
-fn test_binary_tree_level_order() {
-    let root = Some(Rc::new(RefCell::new(TreeNode::new(5))));
-    binary_tree_level_order(root);
+fn test_convert_sorted_array_into_bst() {
+    let nums = vec![-10, -3, 0, 5, 9];
+    let ret = convert_sorted_array_into_bst(nums);
+    print!("{}", ret.is_none());
 }
+
+/*
+ * find max(A[i] - A[j]) and  i < j
+ */
+fn find_max_distance(numbers: Vec<i32>) -> i32 {
+    let mut ret = i32::MIN;
+
+    // solution 2, O(n)
+    let mut left_max = vec![0; numbers.len()];
+    let mut right_min = vec![0; numbers.len()];
+
+    left_max[0] = numbers[0];
+    for i in 1..numbers.len() {
+        left_max[i] = std::cmp::max(left_max[i - 1], numbers[i])
+    }
+
+    for i in numbers.len() - 1..1 {
+        right_min[i] = std::cmp::min(right_min[i + 1], numbers[i]);
+    }
+
+    for i in 0..numbers.len() {
+        ret = std::cmp::max(ret, left_max[i] - right_min[i]);
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_find_max_distance() {
+    let numbers = vec![1, 2, 7, 4, 5, 10, 6, 7, 8, 9, 2, 3, 1, 0];
+    let ret = find_max_distance(numbers);
+    assert_eq!(ret, 10);
+}
+
+
 
 fn main() {
     println!("hello ans");
