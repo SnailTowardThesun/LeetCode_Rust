@@ -1470,6 +1470,22 @@ fn test_convert_sorted_array_into_bst() {
     print!("{}", ret.is_none());
 }
 
+/**
+ * 1662. check if two string arrays are equivalent
+ */
+fn array_strings_are_equal(word1: Vec<String>, word2: Vec<String>) -> bool {
+    let s1: String = word1.into_iter().collect();
+    let s2: String = word2.into_iter().collect();
+
+    return s1 == s2;
+}
+
+#[test]
+fn test_array_strings_are_equal() {
+    let w1 = vec![String::from("ab"), String::from("c")];
+    let w2 = vec![String::from("abc")];
+    print!("{}", array_strings_are_equal(w1, w2))
+}
 /*
  * find max(A[i] - A[j]) and  i < j
  */
