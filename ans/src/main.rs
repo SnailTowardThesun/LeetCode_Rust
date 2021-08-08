@@ -1470,6 +1470,42 @@ fn test_convert_sorted_array_into_bst() {
     print!("{}", ret.is_none());
 }
 
+/*
+ * 257. binary tree paths
+ */
+fn binary_tree_paths(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<String> {
+    let ret = vec![String::from("1")];
+
+    fn helper(root: &Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<String>> {
+        let mut result: Vec<Vec<String>> = vec![];
+        if let Some(node) = root {
+            let (left, right) = (&node.borrow().left, &node.borrow().right);
+            if left.is_none() && right.is_none() {
+                result.push(vec![node.borrow().val.to_string()]);
+            } else {
+                [left, right].iter().for_each(|branch| {
+                    result.extend(helper(*branch).into_iter().map(|mut p| {
+                        p.push(node.borrow().val.to_string());
+                        p
+                    }))
+                });
+            }
+        }
+        return result
+    }
+
+    return helper(&root)
+        .into_iter()
+        .map(|path| path.into_iter().rev().collect::<Vec<String>>().join("->"))
+        .collect();
+}
+
+#[test]
+fn test_binary_tree_paths() {
+    let root = Rc::new(RefCell::new(TreeNode::new(1)));
+    binary_tree_paths(Some(root));
+}
+
 /**
  * 1662. check if two string arrays are equivalent
  */
