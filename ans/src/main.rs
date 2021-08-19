@@ -1448,7 +1448,6 @@ fn test_symmetric_tree() {
 /*
  * 108. convert sorted array into binary search tree
  */
-
 fn convert_sorted_array_into_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
     if nums.is_empty() {
         return None;
@@ -1504,6 +1503,67 @@ fn binary_tree_paths(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<String> {
 fn test_binary_tree_paths() {
     let root = Rc::new(RefCell::new(TreeNode::new(1)));
     binary_tree_paths(Some(root));
+}
+
+/*
+ * 944. delete columns to make sorted
+ */
+fn min_deletion_size(strs: Vec<String>) -> i32 {
+    let mut ret = 0;
+
+    let mut new_strs: Vec<Vec<char>> = Vec::new();
+
+    for i in 0..strs.len() {
+        new_strs.push(strs[i].chars().collect::<Vec<char>>());
+    }
+
+    for i in 0..new_strs[0].len() {
+       for j in 1..new_strs.len() {
+           if new_strs[j-1][i] > new_strs[j][i] {
+               ret +=1;
+               break
+           }
+       }
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_min_deletion_size() {
+    let strs = vec![String::from("cba"),String::from("daf"),String::from("ghi")];
+    let pos = min_deletion_size(strs);
+    print!("{}", pos)
+}
+
+/*
+ * 965. Univalued Binary Tree
+ */
+use std::collections::HashSet;
+fn is_unival_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
+
+    let mut buf:HashSet<i32> = HashSet::new();
+
+    fn helper(root: &Option<Rc<RefCell<TreeNode>>>, buf: &mut HashSet<i32>) {
+        if let Some(node) = root {
+            buf.insert(node.borrow().val);
+            helper(&node.borrow().left, buf);
+            helper(&node.borrow().right, buf);
+        }
+    }
+    helper(&root, &mut buf);
+
+    return buf.len() == 1 || buf.len() == 0
+}
+
+#[test]
+fn test_is_unival_tree() {
+    let mut root = Rc::new(RefCell::new(TreeNode::new(5)));
+    root.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(4))));
+    root.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(3))));
+
+    let ret = is_unival_tree(Some(root));
+    print!("{}", ret)
 }
 
 /**
