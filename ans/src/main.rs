@@ -1569,6 +1569,33 @@ fn test_third_max() {
 }
 
 /*
+ * 783.  Minimum Distance Between BST Nodes
+ */
+fn min_diff_in_bst(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+    let mut buff = vec![];
+
+    fn helper(root: &Option<Rc<RefCell<TreeNode>>>,
+              buf: &mut Vec<i32>) {
+        if let Some(node) =root{
+            let val = node.borrow().val;
+            let l = &node.borrow().left;
+            let r = &node.borrow().right;
+            helper(l,buf);
+            buf.push(val);
+            helper(r,buf);
+        }
+    }
+
+
+    helper(&root, &mut buff);
+
+    return buff.windows(2).map(|c| c[1] - c[0]).min().unwrap()
+}
+
+#[test]
+fn test_min_diff_in_bst() {}
+
+/*
  * 944. delete columns to make sorted
  */
 fn min_deletion_size(strs: Vec<String>) -> i32 {
