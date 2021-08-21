@@ -1470,6 +1470,48 @@ fn test_convert_sorted_array_into_bst() {
 }
 
 /*
+ * 113. Path sum II
+ */
+fn path_sum_II(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<i32>> {
+    let mut ret = vec![];
+
+
+    fn helper(root: &Option<Rc<RefCell<TreeNode>>>,
+               target: i32,
+               buf: &mut Vec<i32>,
+               ret: &mut Vec<Vec<i32>>) {
+        if let Some(node) =root{
+            let val = node.borrow().val;
+            let l = &node.borrow().left;
+            let r = &node.borrow().right;
+            buf.push(val);
+            if target == val && l.is_none() && r.is_none() {
+                ret.push(buf.clone());
+            }
+            helper(l,target  - val, buf, ret);
+            helper(r,target  - val, buf, ret);
+            buf.pop();
+        }
+    }
+
+    helper(&root, target_sum, &mut vec![],&mut ret);
+    return ret
+}
+
+#[test]
+fn test_path_sum_II() {
+    let mut root = Rc::new(RefCell::new(TreeNode::new(5)));
+    let ret = path_sum_II(Some(root), 5);
+    for i in ret {
+        for j in i{
+            print!("{}\t", j);
+        }
+
+        print!("\n");
+    }
+}
+
+/*
  * 257. binary tree paths
  */
 fn binary_tree_paths(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<String> {
