@@ -1548,6 +1548,27 @@ fn test_binary_tree_paths() {
 }
 
 /*
+ * 414. third max number
+ */
+fn third_max(nums: Vec<i32>) -> i32 {
+    let mut nums = nums;
+    nums.sort();
+    nums.dedup();
+    if nums.len() < 3 {
+        return nums[nums.len() - 1];
+    }
+
+    return nums[nums.len() - 3];
+}
+
+#[test]
+fn test_third_max() {
+    let mut arr = vec![4, 2, 2, 3, 2, 1];
+    let ret = third_max(arr);
+    print!("{}", ret);
+}
+
+/*
  * 944. delete columns to make sorted
  */
 fn min_deletion_size(strs: Vec<String>) -> i32 {
