@@ -1656,6 +1656,37 @@ fn test_is_unival_tree() {
     print!("{}", ret)
 }
 
+/**
+ * 1446. Consecutive Characters
+ */
+fn max_power(s: String) -> i32 {
+    let mut max_length: i32 = 0;
+    let mut res = 1;
+
+    let mut pre_char = ' ';
+
+    for c in s.chars() {
+       match c == pre_char {
+           true => {
+               res = res+1;
+               max_length = max_length.max(res);
+           }
+           false => {
+               res = 1;
+               pre_char = c;
+           }
+       }
+    }
+
+    return max_length;
+}
+
+#[test]
+fn test_max_power() {
+    let ret = max_power(String::from("leetcode"));
+    print!("{}", ret);
+}
+
 /*
  * 1796. Second Largest Digit in a String
  */
