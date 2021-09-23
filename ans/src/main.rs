@@ -1276,6 +1276,10 @@ fn min_distance(word1: String, word2: String) -> i32 {
     return steps[m][n] as i32;
 }
 
+
+
+
+
 #[test]
 fn test_min_distance() {
     let word1 = String::from("intention");
@@ -1367,7 +1371,27 @@ fn test_get_alL_unique_binary_search_trees() {
     get_all_unique_binary_search_trees(5);
 }
 
+/*
+ * 96.  Unique Binary Search Trees
+ */
+fn num_trees(n: i32) -> i32 {
+    let n = n as usize;
+    let mut dp: Vec<i32> = vec![0; n + 1];
+    dp[0] = 1;
+    dp[1] = 1;
+    for i in 2..=n {
+        for j in 1..=i {
+            dp[i] += dp[j - 1] * dp[i - j];
+        }
+    }
 
+   return dp[n];
+}
+
+#[test]
+fn test_num_trees() {
+
+}
 /*
  * 98. Validate Binary Search Tree
  */
@@ -1511,6 +1535,31 @@ fn test_path_sum_II() {
     }
 }
 
+/**
+* 219. Contains Duplicate II
+*/
+fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {
+    let mut container = HashMap::new();
+
+    for i in  0..nums.len() {
+        if let Some(j) = container.get(&nums[i]) {
+
+           if i - j < k as usize {
+               return true;
+           }
+       }
+
+        container.insert(nums[i], i);
+    }
+    false
+}
+
+#[test]
+fn test_contains_nearby_duplicate() {
+    let nums = vec![1,2,3,1,2,3];
+    println!("{}", contains_nearby_duplicate(nums, 2))
+}
+
 /*
  * 257. binary tree paths
  */
@@ -1566,6 +1615,31 @@ fn test_third_max() {
     let mut arr = vec![4, 2, 2, 3, 2, 1];
     let ret = third_max(arr);
     print!("{}", ret);
+}
+
+/*
+ * 538. Convert BST to Greater Tree
+ */
+fn convert_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+    fn helper(root: &Option<Rc<RefCell<TreeNode>>>, sum: &mut i32) {
+        if let Some(node) = root {
+            let mut n = node.borrow_mut();
+            helper(&n.right, sum);
+            n.val += *sum;
+            *sum = n.val;
+            helper(&n.left, sum);
+        }
+    }
+
+    let mut sum: i32 = 0;
+    helper(&root, &mut sum);
+
+    root
+}
+
+#[test]
+fn test_convert_bst() {
+    println!("convert bst");
 }
 
 /*
@@ -1655,6 +1729,27 @@ fn test_is_unival_tree() {
     let ret = is_unival_tree(Some(root));
     print!("{}", ret)
 }
+
+/**
+* 1423. Maximum Points You Can Obtain from Cards
+*/
+fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
+    let mut init: i32 = card_points.iter().skip(card_points.len() - k as usize).sum();
+    let mut res = init;
+    for (sub, add) in card_points.iter().skip(card_points.len() - k as usize).
+        zip(card_points.iter().take(k as usize)) {
+        init -= sub;
+        init += add;
+        if init > res {
+            res = init;
+        }
+    }
+
+    res
+}
+
+#[test]
+fn test_max_score(){}
 
 /**
  * 1446. Consecutive Characters
