@@ -1108,6 +1108,39 @@ fn test_three_sum_closet() {
 * Input: digits = "2"
 * Output: ["a","b","c"]
 */
+fn letter_combinations(digits: String) -> Vec<String> {
+    let dic = vec![
+        String::from(" "),
+        String::from(" "),
+        String::from("abc"),
+        String::from("def"),
+        String::from("ghi"),
+        String::from("jkl"),
+        String::from("mno"),
+        String::from("pqrs"),
+        String::from("tuv"),
+        String::from("wxyz"),
+    ];
+
+    let mut ret = vec![String::from("")];
+    for c in digits.chars() {
+        let mut tmp: Vec<String>;
+        for it in ret {
+           tmp.push(it + c.to_string());
+        }
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_letter_combinations() {
+    let digits = String::from("23");
+    let ret = letter_combinations(digits);
+    for i in ret {
+        println!("{}", i);
+    }
+}
 
 /**
 * 62 Unique Paths
@@ -1276,10 +1309,6 @@ fn min_distance(word1: String, word2: String) -> i32 {
     return steps[m][n] as i32;
 }
 
-
-
-
-
 #[test]
 fn test_min_distance() {
     let word1 = String::from("intention");
@@ -1288,8 +1317,8 @@ fn test_min_distance() {
     assert_eq!(min_distance(word1, word2), 5);
 }
 
-use std::rc::Rc;
 use std::cell::RefCell;
+use std::rc::Rc;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct TreeNode {
@@ -1358,12 +1387,12 @@ fn get_all_unique_binary_search_trees(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>
             }
         }
 
-        return res
+        return res;
     }
 
     ret = helper(1, n);
 
-    return ret
+    return ret;
 }
 
 #[test]
@@ -1385,13 +1414,11 @@ fn num_trees(n: i32) -> i32 {
         }
     }
 
-   return dp[n];
+    return dp[n];
 }
 
 #[test]
-fn test_num_trees() {
-
-}
+fn test_num_trees() {}
 /*
  * 98. Validate Binary Search Tree
  */
@@ -1401,8 +1428,8 @@ fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
             if node.borrow().val as i64 <= min || node.borrow().val as i64 >= max {
                 return false;
             }
-            return valid(node.borrow().left.clone(), min, node.borrow().val as i64) &&
-                valid(node.borrow().right.clone(), node.borrow().val as i64, max);
+            return valid(node.borrow().left.clone(), min, node.borrow().val as i64)
+                && valid(node.borrow().right.clone(), node.borrow().val as i64, max);
         }
         true
     }
@@ -1421,7 +1448,9 @@ fn same_tree(p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>)
         (Some(p), Some(q)) => {
             let p = p.borrow();
             let q = q.borrow();
-            p.val == q.val && same_tree(p.left.clone(), q.left.clone()) && same_tree(p.right.clone(), q.right.clone())
+            p.val == q.val
+                && same_tree(p.left.clone(), q.left.clone())
+                && same_tree(p.right.clone(), q.right.clone())
         }
         _ => false,
     }
@@ -1482,7 +1511,6 @@ fn convert_sorted_array_into_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>
     root.borrow_mut().left = convert_sorted_array_into_bst(nums[..mid].to_vec());
     root.borrow_mut().right = convert_sorted_array_into_bst(nums[mid + 1..].to_vec());
 
-
     return Some(root);
 }
 
@@ -1499,12 +1527,13 @@ fn test_convert_sorted_array_into_bst() {
 fn path_sum_II(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<i32>> {
     let mut ret = vec![];
 
-
-    fn helper(root: &Option<Rc<RefCell<TreeNode>>>,
-               target: i32,
-               buf: &mut Vec<i32>,
-               ret: &mut Vec<Vec<i32>>) {
-        if let Some(node) =root{
+    fn helper(
+        root: &Option<Rc<RefCell<TreeNode>>>,
+        target: i32,
+        buf: &mut Vec<i32>,
+        ret: &mut Vec<Vec<i32>>,
+    ) {
+        if let Some(node) = root {
             let val = node.borrow().val;
             let l = &node.borrow().left;
             let r = &node.borrow().right;
@@ -1512,14 +1541,14 @@ fn path_sum_II(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<
             if target == val && l.is_none() && r.is_none() {
                 ret.push(buf.clone());
             }
-            helper(l,target  - val, buf, ret);
-            helper(r,target  - val, buf, ret);
+            helper(l, target - val, buf, ret);
+            helper(r, target - val, buf, ret);
             buf.pop();
         }
     }
 
-    helper(&root, target_sum, &mut vec![],&mut ret);
-    return ret
+    helper(&root, target_sum, &mut vec![], &mut ret);
+    return ret;
 }
 
 #[test]
@@ -1527,7 +1556,7 @@ fn test_path_sum_II() {
     let mut root = Rc::new(RefCell::new(TreeNode::new(5)));
     let ret = path_sum_II(Some(root), 5);
     for i in ret {
-        for j in i{
+        for j in i {
             print!("{}\t", j);
         }
 
@@ -1541,13 +1570,12 @@ fn test_path_sum_II() {
 fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {
     let mut container = HashMap::new();
 
-    for i in  0..nums.len() {
+    for i in 0..nums.len() {
         if let Some(j) = container.get(&nums[i]) {
-
-           if i - j < k as usize {
-               return true;
-           }
-       }
+            if i - j < k as usize {
+                return true;
+            }
+        }
 
         container.insert(nums[i], i);
     }
@@ -1556,7 +1584,7 @@ fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {
 
 #[test]
 fn test_contains_nearby_duplicate() {
-    let nums = vec![1,2,3,1,2,3];
+    let nums = vec![1, 2, 3, 1, 2, 3];
     println!("{}", contains_nearby_duplicate(nums, 2))
 }
 
@@ -1581,7 +1609,7 @@ fn binary_tree_paths(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<String> {
                 });
             }
         }
-        return result
+        return result;
     }
 
     return helper(&root)
@@ -1648,22 +1676,20 @@ fn test_convert_bst() {
 fn min_diff_in_bst(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     let mut buff = vec![];
 
-    fn helper(root: &Option<Rc<RefCell<TreeNode>>>,
-              buf: &mut Vec<i32>) {
-        if let Some(node) =root{
+    fn helper(root: &Option<Rc<RefCell<TreeNode>>>, buf: &mut Vec<i32>) {
+        if let Some(node) = root {
             let val = node.borrow().val;
             let l = &node.borrow().left;
             let r = &node.borrow().right;
-            helper(l,buf);
+            helper(l, buf);
             buf.push(val);
-            helper(r,buf);
+            helper(r, buf);
         }
     }
 
-
     helper(&root, &mut buff);
 
-    return buff.windows(2).map(|c| c[1] - c[0]).min().unwrap()
+    return buff.windows(2).map(|c| c[1] - c[0]).min().unwrap();
 }
 
 #[test]
@@ -1682,12 +1708,12 @@ fn min_deletion_size(strs: Vec<String>) -> i32 {
     }
 
     for i in 0..new_strs[0].len() {
-       for j in 1..new_strs.len() {
-           if new_strs[j-1][i] > new_strs[j][i] {
-               ret +=1;
-               break
-           }
-       }
+        for j in 1..new_strs.len() {
+            if new_strs[j - 1][i] > new_strs[j][i] {
+                ret += 1;
+                break;
+            }
+        }
     }
 
     return ret;
@@ -1695,7 +1721,11 @@ fn min_deletion_size(strs: Vec<String>) -> i32 {
 
 #[test]
 fn test_min_deletion_size() {
-    let strs = vec![String::from("cba"),String::from("daf"),String::from("ghi")];
+    let strs = vec![
+        String::from("cba"),
+        String::from("daf"),
+        String::from("ghi"),
+    ];
     let pos = min_deletion_size(strs);
     print!("{}", pos)
 }
@@ -1705,8 +1735,7 @@ fn test_min_deletion_size() {
  */
 use std::collections::HashSet;
 fn is_unival_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-
-    let mut buf:HashSet<i32> = HashSet::new();
+    let mut buf: HashSet<i32> = HashSet::new();
 
     fn helper(root: &Option<Rc<RefCell<TreeNode>>>, buf: &mut HashSet<i32>) {
         if let Some(node) = root {
@@ -1717,7 +1746,7 @@ fn is_unival_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
     }
     helper(&root, &mut buf);
 
-    return buf.len() == 1 || buf.len() == 0
+    return buf.len() == 1 || buf.len() == 0;
 }
 
 #[test]
@@ -1734,10 +1763,16 @@ fn test_is_unival_tree() {
 * 1423. Maximum Points You Can Obtain from Cards
 */
 fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
-    let mut init: i32 = card_points.iter().skip(card_points.len() - k as usize).sum();
+    let mut init: i32 = card_points
+        .iter()
+        .skip(card_points.len() - k as usize)
+        .sum();
     let mut res = init;
-    for (sub, add) in card_points.iter().skip(card_points.len() - k as usize).
-        zip(card_points.iter().take(k as usize)) {
+    for (sub, add) in card_points
+        .iter()
+        .skip(card_points.len() - k as usize)
+        .zip(card_points.iter().take(k as usize))
+    {
         init -= sub;
         init += add;
         if init > res {
@@ -1749,7 +1784,7 @@ fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
 }
 
 #[test]
-fn test_max_score(){}
+fn test_max_score() {}
 
 /**
  * 1446. Consecutive Characters
@@ -1761,16 +1796,16 @@ fn max_power(s: String) -> i32 {
     let mut pre_char = ' ';
 
     for c in s.chars() {
-       match c == pre_char {
-           true => {
-               res = res+1;
-               max_length = max_length.max(res);
-           }
-           false => {
-               res = 1;
-               pre_char = c;
-           }
-       }
+        match c == pre_char {
+            true => {
+                res = res + 1;
+                max_length = max_length.max(res);
+            }
+            false => {
+                res = 1;
+                pre_char = c;
+            }
+        }
     }
 
     return max_length;
@@ -1850,8 +1885,6 @@ fn test_find_max_distance() {
     let ret = find_max_distance(numbers);
     assert_eq!(ret, 10);
 }
-
-
 
 fn main() {
     println!("hello ans");
