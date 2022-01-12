@@ -1714,6 +1714,46 @@ fn test_convert_bst() {
     println!("convert bst");
 }
 
+/**
+* 747.
+*/
+fn dominant_index(nums: Vec<i32>) -> i32 {
+    if nums.len() == 1 {
+        return 0;
+    }
+
+    let mut max = i32::MIN;
+    let mut max_pos = 0;
+
+    let mut second_max = i32::MIN;
+
+    for i in 0..nums.len() {
+        if nums[i] > max {
+            second_max = max;
+            max = nums[i];
+            max_pos = i;
+            continue;
+        }
+
+        if nums[i] > second_max {
+            second_max = nums[i]
+        }
+    }
+
+    if max < second_max * 2 {
+        return -1
+    }
+
+    return max_pos as i32;
+}
+
+#[test]
+fn test_dominant_index() {
+    let nums = vec![1,2,3,4];
+    let ret = dominant_index(nums);
+    assert_eq!(ret, -1)
+}
+
 /*
  * 783.  Minimum Distance Between BST Nodes
  */
