@@ -1109,28 +1109,41 @@ fn test_three_sum_closet() {
 * Output: ["a","b","c"]
 */
 fn letter_combinations(digits: String) -> Vec<String> {
-    let dic = vec![
-        String::from(" "),
-        String::from(" "),
-        String::from("abc"),
-        String::from("def"),
-        String::from("ghi"),
-        String::from("jkl"),
-        String::from("mno"),
-        String::from("pqrs"),
-        String::from("tuv"),
-        String::from("wxyz"),
-    ];
+    let mut map = HashMap::new();
+    map.insert('2', "abc".to_string());
+    map.insert('3', "def".to_string());
+    map.insert('4', "ghi".to_string());
+    map.insert('5', "jkl".to_string());
+    map.insert('6', "mno".to_string());
+    map.insert('7', "pqrs".to_string());
+    map.insert('8', "tuv".to_string());
+    map.insert('9', "wxyz".to_string());
 
-    let mut ret = vec![String::from("")];
-    for c in digits.chars() {
-        let mut tmp: Vec<String>;
-        for it in ret {
-           tmp.push(it + c.to_string());
+    fn dfs(
+        idx: usize,
+        digits: &String,
+        map: &HashMap<char, String>,
+        path: &mut String,
+        ans: &mut Vec<String>,
+    ) {
+        if digits.len() == idx {
+            ans.push(path.clone());
+            return;
+        }
+        let cc = digits.chars().nth(idx).unwrap();
+        for c in map.get(&cc).unwrap().chars() {
+            path.push(c);
+            dfs(idx + 1, &digits, &map, path, ans);
+            path.pop();
         }
     }
+    let mut ans = Vec::new();
+    if digits.is_empty() {
+        return ans;
+    }
+    dfs(0, &digits, &map, &mut String::new(), &mut ans);
 
-    return ret;
+    return ans;
 }
 
 #[test]
@@ -1622,6 +1635,37 @@ fn binary_tree_paths(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<String> {
 fn test_binary_tree_paths() {
     let root = Rc::new(RefCell::new(TreeNode::new(1)));
     binary_tree_paths(Some(root));
+}
+
+/**
+* 334.
+*/
+fn increasing_triplet(nums: Vec<i32>) -> bool {
+    if nums.len() < 3 {
+        return false;
+    }
+
+    let mut small = i32::MAX;
+    let mut mid = i32::MAX;
+
+    for i in nums {
+        if small >= i {
+            small = i;
+        } else if mid >= i {
+            mid = i;
+        } else if i > mid {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+#[test]
+fn test_increasing_triplet() {
+    let example = vec![1,2,3,4,5];
+    let ret = increasing_triplet(example);
+    assert_eq!(ret, true);
 }
 
 /*
