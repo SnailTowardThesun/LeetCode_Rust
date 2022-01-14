@@ -1954,6 +1954,32 @@ fn test_max_power() {
     print!("{}", ret);
 }
 
+/**
+* 1716.
+*/
+fn total_money(n: i32) -> i32 {
+    if n < 0 {
+        return 0;
+    }
+
+    let mut total = 1;
+    let mut begin = 1;
+    for i in 1..n {
+        if i % 7 == 0 {
+            begin += 1;
+        }
+
+        total += begin + i % 7;
+    }
+    return total;
+}
+
+#[test]
+fn test_total_money() {
+    let ret = total_money(10);
+    assert_eq!(ret, 37);
+}
+
 /*
  * 1796. Second Largest Digit in a String
  */
