@@ -1721,6 +1721,44 @@ fn test_k_smallest_pairs() {
 
 }
 
+/**
+* 382.
+*/
+struct EqualList {
+    list: Vec<i32>,
+}
+
+use rand::{Rng, thread_rng};
+
+impl EqualList {
+    fn new(head: Option<Box<ListNode>>) -> Self {
+        let mut list = vec![];
+
+        let mut pos = head.as_ref();
+
+        while let Some(node) = pos {
+            list.push(node.val);
+            pos = node.next.as_ref();
+        }
+
+        return EqualList {list};
+    }
+
+    fn get_random(&self) -> i32 {
+        let mut ra = rand::thread_rng();
+        let target: usize = ra.gen_range(0..self.list.len());
+        return self.list[target];
+    }
+}
+#[test]
+fn test_equal_list() {
+    let mut head = Box::new(ListNode::new(2));
+    let obj = EqualList::new(Some(head));
+    let ret = obj.get_random();
+    println!("{}", ret);
+}
+
+
 /*
  * 414. third max number
  */
