@@ -1935,6 +1935,36 @@ fn test_is_unival_tree() {
 }
 
 /**
+* 1220.
+*/
+fn count_vowel_permutation(n: i32) -> i32 {
+    let tmp: i64 = 1000000000 + 7;
+    let mut dp = vec![1,1,1,1,1];
+    let mut ndp = vec![0,0,0,0,0];
+
+    for i in 1..n {
+        ndp[0] = (dp[1] + dp[2] + dp[4]) % tmp;
+        ndp[1] = (dp[0] + dp[2]) % tmp;
+        ndp[2] = (dp[1] + dp[3]) % tmp;
+        ndp[3] = (dp[2]) % tmp;
+        ndp[4] = (dp[2] + dp[3]) % tmp;
+        dp = ndp.clone();
+    }
+
+    let mut ans = 0;
+    for i in 0..5 {
+        ans = (ans + dp[i]) % tmp;
+    }
+    return ans as i32;
+}
+
+#[test]
+fn test_count_vowel_permutation() {
+    let ret = count_vowel_permutation(144);
+    print!("{}", ret);
+}
+
+/**
 * 1423. Maximum Points You Can Obtain from Cards
 */
 fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
