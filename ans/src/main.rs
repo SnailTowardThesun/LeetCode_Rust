@@ -1331,6 +1331,7 @@ fn test_min_distance() {
 }
 
 use std::cell::RefCell;
+use std::cmp::{max, min};
 use std::rc::Rc;
 
 #[derive(Debug, PartialEq, Eq)]
@@ -1585,14 +1586,14 @@ fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {
 
     for i in 0..nums.len() {
         if let Some(j) = container.get(&nums[i]) {
-            if i - j < k as usize {
+            if i - j <= k as usize {
                 return true;
             }
         }
 
         container.insert(nums[i], i);
     }
-    false
+    return false;
 }
 
 #[test]
@@ -1803,6 +1804,39 @@ fn convert_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNod
 #[test]
 fn test_convert_bst() {
     println!("convert bst");
+}
+
+/**
+* 539.
+*/
+fn find_min_difference(time_points: Vec<String>) -> i32 {
+    fn get_minutes(str: String) -> i32 {
+        let b = str.as_bytes();
+        return ((b[0] - '0' as u8) as i32 * 10 + (b[1] - '0' as u8) as i32) * 60 + (b[3] - '0' as u8) as i32 * 10 + (b[4] - '0' as u8) as i32;
+    };
+
+    let mut container = vec![];
+    let mut time_points = time_points;
+    for i in 0..time_points.len() {
+        container.push(get_minutes(time_points[i].to_string()));
+    }
+
+    container.sort();
+    let mut ret = i32::MAX;
+    for i in 1..container.len() {
+        let tmp = container[i] - container[i-1];
+        ret = min(tmp, ret);
+    }
+
+    ret = min(ret, container[0] + 1440 - container[container.len()-1]);
+    return ret;
+}
+
+#[test]
+fn test_find_min_difference() {
+    let example = vec![String::from("23:59"), String::from("00:01"), String::from("00:12")];
+    let ret = find_min_difference(example);
+    print!("{}", ret);
 }
 
 /**
