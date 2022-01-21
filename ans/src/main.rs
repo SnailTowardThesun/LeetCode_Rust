@@ -1999,6 +1999,20 @@ fn test_count_vowel_permutation() {
 }
 
 /**
+* 1332.
+*/
+fn remove_palindrome_sub(s: String) -> i32 {
+    return if s == s.chars().rev().collect::<String>() {1} else {2};
+}
+
+#[test]
+fn test_remove_palindrome_sub() {
+    let s: String = String::from("ababa");
+    let ret = remove_palindrome_sub(s);
+    print!("{}\n", ret);
+}
+
+/**
 * 1423. Maximum Points You Can Obtain from Cards
 */
 fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
