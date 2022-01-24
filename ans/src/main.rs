@@ -2188,6 +2188,13 @@ fn test_array_strings_are_equal() {
     let w2 = vec![String::from("abc")];
     print!("{}", array_strings_are_equal(w1, w2))
 }
+
+/**
+* 1688.
+*/
+fn number_of_matches(n: i32) -> i32 {
+    return n - 1;
+}
 /*
  * find max(A[i] - A[j]) and  i < j
  */
