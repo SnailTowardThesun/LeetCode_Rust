@@ -1211,6 +1211,50 @@ fn test_four_sum() {
         println!();
     }
 }
+
+/**
+* 40.
+*/
+fn combination_sum2(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+    let mut ret = vec![];
+    
+    fn dfs(candidates: &Vec<i32>, target:i32, cans: &mut Vec<i32>, ret: &mut Vec<Vec<i32>>, idx: usize) {
+        if target < 0 {
+            return
+        }
+
+        if target == 0 {
+            ret.push(cans.clone());
+            return
+        }
+
+        for i in idx..candidates.len() {
+            if i > idx && candidates[i] == candidates[i-1] { continue; }
+            cans.push(candidates[i]);
+            dfs(candidates, target - candidates[i], cans, ret, i+1);
+            cans.pop();
+        }
+    }
+
+    let mut candidates = candidates;
+    candidates.sort();
+    dfs(&candidates, target, &mut vec![], &mut ret, 0);
+    return ret;
+}
+#[test]
+fn test_combination_sum2() {
+    let candidates = vec![10,1,2,7,6,1,5];
+    let ret = combination_sum2(candidates, 8);
+    for i in 0..ret.len() {
+        let tmp = ret.get(i).unwrap();
+        for j in 0..tmp.len() {
+            print!("{}\t", tmp.get(j).unwrap())
+        }
+        print!("\n");
+    }
+}
+
+
 /**
 * 62 Unique Paths
 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
