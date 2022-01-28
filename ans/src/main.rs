@@ -430,7 +430,7 @@ fn reverse(x: i32) -> i32 {
         num = num / 10;
     }
 
-    if reverse_num > std::i32::MAX as i64 || reverse_num < std::i32::MIN as i64 {
+    if reverse_num > i32::MAX as i64 || reverse_num < i32::MIN as i64 {
         return 0;
     }
 
@@ -532,7 +532,7 @@ fn my_atoi(str: String) -> i32 {
         if ch >= '0' && ch <= '9' {
             is_recording = true;
             ret = ret * 10 + ch.to_digit(10).unwrap() as i64;
-            if ret > std::i32::MAX as i64 {
+            if ret > i32::MAX as i64 {
                 break;
             }
             continue;
@@ -545,12 +545,12 @@ fn my_atoi(str: String) -> i32 {
         ret = 0 - ret;
     }
 
-    if ret > std::i32::MAX as i64 {
-        return std::i32::MAX;
+    if ret > i32::MAX as i64 {
+        return i32::MAX;
     }
 
-    if ret < std::i32::MIN as i64 {
-        return std::i32::MIN;
+    if ret < i32::MIN as i64 {
+        return i32::MIN;
     }
 
     return ret as i32;
@@ -559,7 +559,7 @@ fn my_atoi(str: String) -> i32 {
 #[test]
 fn test_my_atoi() {
     let s = String::from("9223372036854775808");
-    assert_eq!(my_atoi(s), std::i32::MAX);
+    assert_eq!(my_atoi(s), i32::MAX);
 }
 
 /**
@@ -1510,7 +1510,7 @@ fn get_all_unique_binary_search_trees(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>
 }
 
 #[test]
-fn test_get_alL_unique_binary_search_trees() {
+fn test_get_al_l_unique_binary_search_trees() {
     get_all_unique_binary_search_trees(5);
 }
 
@@ -1551,7 +1551,7 @@ fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
 }
 
 #[test]
-fn test_unique_binary_search_trees_II() {}
+fn test_unique_binary_search_trees_ii() {}
 
 /*
  * 100. same tree
@@ -1638,7 +1638,7 @@ fn test_convert_sorted_array_into_bst() {
 /*
  * 113. Path sum II
  */
-fn path_sum_II(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<i32>> {
+fn path_sum_ii(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<i32>> {
     let mut ret = vec![];
 
     fn helper(
@@ -1666,9 +1666,9 @@ fn path_sum_II(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<
 }
 
 #[test]
-fn test_path_sum_II() {
+fn test_path_sum_ii() {
     let mut root = Rc::new(RefCell::new(TreeNode::new(5)));
-    let ret = path_sum_II(Some(root), 5);
+    let ret = path_sum_ii(Some(root), 5);
     for i in ret {
         for j in i {
             print!("{}\t", j);
@@ -1706,8 +1706,6 @@ fn test_contains_nearby_duplicate() {
  * 257. binary tree paths
  */
 fn binary_tree_paths(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<String> {
-    let ret = vec![String::from("1")];
-
     fn helper(root: &Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<String>> {
         let mut result: Vec<Vec<String>> = vec![];
         if let Some(node) = root {
@@ -1786,7 +1784,7 @@ fn  k_smallest_pairs(nums1: Vec<i32>, nums2: Vec<i32>, k: i32) -> Vec<Vec<i32>> 
     let mut ceiling = 0;
     let mut curr = 0;
 
-    for n in 0..k {
+    for _ in 0..k {
         sums_pair.push(vec!(nums1[curr], nums2[next[curr]]));
         next[curr] += 1;
         if next[curr] >= len2 {
@@ -2043,6 +2041,8 @@ fn test_min_deletion_size() {
  * 965. Univalued Binary Tree
  */
 use std::collections::HashSet;
+use std::collections::vec_deque::VecDeque;
+
 fn is_unival_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
     let mut buf: HashSet<i32> = HashSet::new();
 
@@ -2076,7 +2076,7 @@ fn count_vowel_permutation(n: i32) -> i32 {
     let mut dp = vec![1,1,1,1,1];
     let mut ndp = vec![0,0,0,0,0];
 
-    for i in 1..n {
+    for _ in 1..n {
         ndp[0] = (dp[1] + dp[2] + dp[4]) % tmp;
         ndp[1] = (dp[0] + dp[2]) % tmp;
         ndp[2] = (dp[1] + dp[3]) % tmp;
