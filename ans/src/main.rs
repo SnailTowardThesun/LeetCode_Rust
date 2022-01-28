@@ -2196,6 +2196,52 @@ fn test_total_money() {
     assert_eq!(ret, 37);
 }
 
+/**
+* 1765.
+*/
+use std::collections::VecDeque;
+fn highest_peak(is_water: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    let m = is_water.len();
+    let n = is_water[0].len();
+
+    let mut ret = vec![vec![0; n]; m];
+    let mut container = VecDeque::new();;
+
+    let mut visited = vec![vec![false; n]; m];
+    for i in 0..m {
+        for j in 0..n {
+            if is_water[i][j] == 1 {
+                visited[i][j] = true;
+                container.push_back((i, j));
+            }
+        }
+    }
+
+    let mut target = 1;
+    while !container.is_empty() {
+        for _ in 0..container.len() {
+            let (i, j) = container.pop_front().unwrap();
+            for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)] {
+                if x < m && y < n && !visited[x][y] {
+                    ret[x][y] = target;
+                    visited[x][y] = true;
+                    container.push_back((x, y));
+                }
+            }
+
+        }
+
+        target = target + 1;
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_highest_peak() {
+
+}
+
 /*
  * 1796. Second Largest Digit in a String
  */
