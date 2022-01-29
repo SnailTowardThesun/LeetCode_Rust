@@ -14,7 +14,7 @@ use std::option::Option;
 */
 
 fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut v: Vec<i32> = Vec::new();
+    let v: Vec<i32> = Vec::new();
     let mut m = HashMap::new();
 
     for (index, value) in nums.iter().enumerate() {
@@ -201,7 +201,7 @@ fn test_length_of_longest_substring() {
  *  The median is (2 + 3)/2 = 2.5
  */
 fn get_median_of_two_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
-    let mut ret: f64 = 0.0;
+    let ret: f64 = 0.0;
 
     let short;
     let long;
@@ -312,7 +312,7 @@ fn longest_palindrome(s: String) -> String {
         flags[i][i] = true;
 
         for j in 0..i {
-            flags[j][i] = (b[j] == b[i] && (i - j < 3 || flags[j + 1][i - 1]));
+            flags[j][i] = b[j] == b[i] && (i - j < 3 || flags[j + 1][i - 1]);
             if flags[j][i] && i - j + 1 > max {
                 start = j;
                 max = i - j + 1;
@@ -880,7 +880,7 @@ fn test_int_to_roman() {
 fn roman_to_int(s: String) -> i32 {
     let mut num: i32 = 0;
 
-    let mut val: i32 = 0;
+    let mut val: i32;
     let mut last: i32 = 0;
 
     for i in s.chars() {
@@ -1387,8 +1387,8 @@ fn test_in_path_sum() {
 **/
 
 fn min_distance(word1: String, word2: String) -> i32 {
-    let mut n = word1.len();
-    let mut m = word2.len();
+    let n = word1.len();
+    let m = word2.len();
 
     let mut steps = vec![vec![0; n + 1]; m + 1];
 
@@ -1431,7 +1431,7 @@ fn test_min_distance() {
 }
 
 use std::cell::RefCell;
-use std::cmp::{max, min};
+use std::cmp::min;
 use std::rc::Rc;
 
 #[derive(Debug, PartialEq, Eq)]
@@ -1471,14 +1471,17 @@ fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
 }
 
 #[test]
-fn test_inorder_traversal() {}
+fn test_inorder_traversal() {
+    let root = None;
+    inorder_traversal(root);
+}
 
 /*
  * 95. Unique Binary Search Trees II
  * Given an integer n, return all the structurally unique binary search trees, which has exactly n nodes of unique values from 1 to n. Return the answer in any order.
  */
 fn get_all_unique_binary_search_trees(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
-    let mut ret = vec![];
+    let ret ;
 
     fn helper(l: i32, r: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
         if l > r {
@@ -1532,7 +1535,9 @@ fn num_trees(n: i32) -> i32 {
 }
 
 #[test]
-fn test_num_trees() {}
+fn test_num_trees() {
+    num_trees(10);
+}
 /*
  * 98. Validate Binary Search Tree
  */
@@ -1551,7 +1556,9 @@ fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
 }
 
 #[test]
-fn test_unique_binary_search_trees_ii() {}
+fn test_unique_binary_search_trees_ii() {
+    is_valid_bst(None);
+}
 
 /*
  * 100. same tree
@@ -1572,8 +1579,8 @@ fn same_tree(p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>)
 
 #[test]
 fn test_same_tree() {
-    let mut p = Some(Rc::new(RefCell::new(TreeNode::new(5))));
-    let mut q = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    let p = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    let q = Some(Rc::new(RefCell::new(TreeNode::new(5))));
     assert_eq!(true, same_tree(p, q));
 }
 
@@ -1621,7 +1628,7 @@ fn convert_sorted_array_into_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>
     }
 
     let mid = nums.len() / 2;
-    let mut root = Rc::new(RefCell::new(TreeNode::new(nums[mid])));
+    let root = Rc::new(RefCell::new(TreeNode::new(nums[mid])));
     root.borrow_mut().left = convert_sorted_array_into_bst(nums[..mid].to_vec());
     root.borrow_mut().right = convert_sorted_array_into_bst(nums[mid + 1..].to_vec());
 
@@ -1667,7 +1674,7 @@ fn path_sum_ii(root: Option<Rc<RefCell<TreeNode>>>, target_sum: i32) -> Vec<Vec<
 
 #[test]
 fn test_path_sum_ii() {
-    let mut root = Rc::new(RefCell::new(TreeNode::new(5)));
+    let root = Rc::new(RefCell::new(TreeNode::new(5)));
     let ret = path_sum_ii(Some(root), 5);
     for i in ret {
         for j in i {
@@ -1813,7 +1820,7 @@ fn test_k_smallest_pairs() {
     let nums1 = vec![1, 2, 4];
     let nums2 = vec![-1, 1, 2];
     let ret = k_smallest_pairs(nums1, nums2, 10);
-    let mut ret = ret;
+    let ret = ret;
     for i in 0..ret.len() {
         print!("[{}, {}]\n", ret[i][0], ret[i][1]);
     }
@@ -1827,7 +1834,7 @@ struct EqualList {
     list: Vec<i32>,
 }
 
-use rand::{Rng, thread_rng};
+use rand::Rng;
 
 impl EqualList {
     fn new(head: Option<Box<ListNode>>) -> Self {
@@ -1851,7 +1858,7 @@ impl EqualList {
 }
 #[test]
 fn test_equal_list() {
-    let mut head = Box::new(ListNode::new(2));
+    let head = Box::new(ListNode::new(2));
     let obj = EqualList::new(Some(head));
     let ret = obj.get_random();
     println!("{}", ret);
@@ -1874,7 +1881,7 @@ fn third_max(nums: Vec<i32>) -> i32 {
 
 #[test]
 fn test_third_max() {
-    let mut arr = vec![4, 2, 2, 3, 2, 1];
+    let arr = vec![4, 2, 2, 3, 2, 1];
     let ret = third_max(arr);
     print!("{}", ret);
 }
@@ -1901,7 +1908,7 @@ fn convert_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNod
 
 #[test]
 fn test_convert_bst() {
-    println!("convert bst");
+    convert_bst(None);
 }
 
 /**
@@ -1911,10 +1918,10 @@ fn find_min_difference(time_points: Vec<String>) -> i32 {
     fn get_minutes(str: String) -> i32 {
         let b = str.as_bytes();
         return ((b[0] - '0' as u8) as i32 * 10 + (b[1] - '0' as u8) as i32) * 60 + (b[3] - '0' as u8) as i32 * 10 + (b[4] - '0' as u8) as i32;
-    };
+    }
 
     let mut container = vec![];
-    let mut time_points = time_points;
+    let time_points = time_points;
     for i in 0..time_points.len() {
         container.push(get_minutes(time_points[i].to_string()));
     }
@@ -2000,7 +2007,50 @@ fn min_diff_in_bst(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 }
 
 #[test]
-fn test_min_diff_in_bst() {}
+fn test_min_diff_in_bst() {
+    min_diff_in_bst(None);
+}
+
+/**
+* 884.
+*/
+fn uncommon_from_sentences(s1: String, s2: String) -> Vec<String> {
+    let mut ret = vec![];
+
+    let mut tmp = std::collections::HashMap::new();
+
+    fn helper(dics: &mut std::collections::HashMap<String, i32>, msg: &String) {
+        for word in msg.split(' ') {
+            if dics.contains_key(word) {
+                if let Some(s) = dics.get_mut(word) {
+                    *s  += 1;
+                }
+                continue;
+            }
+
+            dics.insert(word.parse().unwrap(), 1);
+        }
+    }
+
+    helper(&mut tmp, &s1);
+    helper(&mut tmp, &s2);
+
+    for (k,v) in tmp {
+        if v == 1 {
+            ret.push(k.to_string());
+        }
+    }
+
+    return ret
+}
+
+#[test]
+fn test_uncommon_from_sentences() {
+    let ret = uncommon_from_sentences(String::from("this apple is sweet"), String::from("this apple is sour"));
+    for i in 0..ret.len() {
+        print!("{}\t", ret[i])
+    }
+}
 
 /*
  * 944. delete columns to make sorted
@@ -2060,7 +2110,7 @@ fn is_unival_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
 
 #[test]
 fn test_is_unival_tree() {
-    let mut root = Rc::new(RefCell::new(TreeNode::new(5)));
+    let root = Rc::new(RefCell::new(TreeNode::new(5)));
     root.borrow_mut().right = Some(Rc::new(RefCell::new(TreeNode::new(4))));
     root.borrow_mut().left = Some(Rc::new(RefCell::new(TreeNode::new(3))));
 
@@ -2137,7 +2187,9 @@ fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
 }
 
 #[test]
-fn test_max_score() {}
+fn test_max_score() {
+    max_score(vec![], 1);
+}
 
 /**
  * 1446. Consecutive Characters
@@ -2199,13 +2251,12 @@ fn test_total_money() {
 /**
 * 1765.
 */
-use std::collections::VecDeque;
 fn highest_peak(is_water: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
     let m = is_water.len();
     let n = is_water[0].len();
 
     let mut ret = vec![vec![0; n]; m];
-    let mut container = VecDeque::new();;
+    let mut container = VecDeque::new();
 
     let mut visited = vec![vec![false; n]; m];
     for i in 0..m {
@@ -2239,7 +2290,7 @@ fn highest_peak(is_water: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
 
 #[test]
 fn test_highest_peak() {
-
+    highest_peak(vec![]);
 }
 
 /*
@@ -2261,6 +2312,12 @@ fn second_highest(s: String) -> i32 {
         .nth(1)
         .unwrap_or(-1)
 }
+
+#[test]
+fn test_second_highest() {
+    second_highest(String::from("1234"));
+}
+
 
 /*
  * 1662. check if two string arrays are equivalent
@@ -2285,6 +2342,12 @@ fn test_array_strings_are_equal() {
 fn number_of_matches(n: i32) -> i32 {
     return n - 1;
 }
+
+#[test]
+fn test_number_of_matches() {
+    number_of_matches(11);
+}
+
 /*
  * find max(A[i] - A[j]) and  i < j
  */
