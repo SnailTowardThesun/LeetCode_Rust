@@ -2163,6 +2163,40 @@ fn test_remove_palindrome_sub() {
 }
 
 /**
+* 1342.
+*/
+fn number_of_steps(num: i32) -> i32 {
+    if num == 0 {
+        return 0;
+    }
+
+    let mut ret = 0;
+
+    let mut num = num;
+    loop {
+        if num == 0 {
+            break;
+        }
+
+        if num % 2 == 0 {
+            num = num / 2;
+        } else {
+            num = num - 1;
+        }
+
+        ret += 1;
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_number_of_steps() {
+    let ret = number_of_steps(14);
+    println!("{}", ret);
+}
+
+/**
 * 1423. Maximum Points You Can Obtain from Cards
 */
 fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
