@@ -1620,6 +1620,31 @@ fn test_symmetric_tree() {
 }
 
 /**
+* 104.
+*/
+fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+    match root {
+        None => 0,
+        Some(node) => {
+            let left = max_depth(node.borrow_mut().left.take());
+            let right = max_depth(node.borrow_mut().right.take());
+            return if left >= right {
+                left + 1
+            } else {
+                right + 1
+            }
+        }
+    }
+}
+
+#[test]
+fn test_max_depth() {
+    let root = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    let ret = max_depth(root);
+    println!("{}", ret);
+}
+
+/**
  * 108. convert sorted array into binary search tree
  */
 fn convert_sorted_array_into_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
