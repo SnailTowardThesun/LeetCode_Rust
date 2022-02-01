@@ -1620,6 +1620,57 @@ fn test_symmetric_tree() {
 }
 
 /**
+* 103.
+*/
+fn zigzag_level_order(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<Vec<i32>> {
+    let mut ret = vec![];
+    let mut q = VecDeque::new();
+
+    if root != None {
+        q.push_back(root);
+    }
+
+    let mut level = 0;
+    while !q.is_empty() {
+        let mut tmp = vec![];
+        let size = q.len();
+        for _ in 0..size {
+            if let Some(node)= q.pop_front().unwrap() {
+                tmp.push(node.borrow().val);
+
+                if node.borrow().left != None {
+                    q.push_back(node.borrow_mut().left.take());
+                }
+
+                if node.borrow().right != None {
+                    q.push_back(node.borrow_mut().right.take());
+                }
+            }
+        }
+
+        if level % 2 == 1 {
+            tmp.reverse();
+        }
+
+        level += 1;
+        ret.push(tmp);
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_zigzag_level_order() {
+    let example = Some(Rc::new(RefCell::new(TreeNode::new(5))));
+    let ret = zigzag_level_order(example);
+    for i in 0..ret.len() {
+        for j in 0..ret[i].len() {
+            print!("{}\t", ret[i][j]);
+        }
+    }
+}
+
+/**
 * 104.
 */
 fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
