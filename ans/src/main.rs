@@ -1619,7 +1619,7 @@ fn test_symmetric_tree() {
     symmetric_tree(root);
 }
 
-/*
+/**
  * 108. convert sorted array into binary search tree
  */
 fn convert_sorted_array_into_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
@@ -2415,6 +2415,25 @@ fn number_of_matches(n: i32) -> i32 {
 #[test]
 fn test_number_of_matches() {
     number_of_matches(11);
+}
+
+/**
+* 2000
+*/
+fn reverse_prefix(word: String, ch: char) -> String {
+    let pos = word.find(ch);
+    if pos == None {
+        return word;
+    }
+
+    return word[0..pos.unwrap()+1].chars().rev().collect::<String>() + &word[(pos.unwrap() + 1)..];
+}
+
+#[test]
+fn test_reverse_prefix() {
+    let example = String::from("abcdef");
+    let ret = reverse_prefix(example, 'd');
+    println!("{}", ret);
 }
 
 /*
