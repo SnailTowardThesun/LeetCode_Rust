@@ -2092,7 +2092,6 @@ fn test_min_deletion_size() {
  */
 use std::collections::HashSet;
 use std::collections::vec_deque::VecDeque;
-
 fn is_unival_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
     let mut buf: HashSet<i32> = HashSet::new();
 
@@ -2281,6 +2280,42 @@ fn test_total_money() {
     let ret = total_money(10);
     assert_eq!(ret, 37);
 }
+
+/**
+* 1763.
+*/
+fn longest_nice_substring(s: String) -> String {
+    let mut upper_letter = vec![false; 26];
+    let mut lower_letter = vec![false; 26];
+
+    for i in s.chars() {
+        if i.is_ascii_uppercase() {
+            upper_letter[i as usize - 'A' as usize] = true;
+        } else {
+            lower_letter[i as usize - 'a' as usize] = true;
+        }
+    }
+
+    for (i, ch) in s.chars().enumerate() {
+        if upper_letter[ch.to_ascii_uppercase() as usize - 'A' as usize] == true && lower_letter[ch.to_ascii_lowercase() as usize - 'a' as usize] == true {
+            continue;
+        }
+
+        let s1 = longest_nice_substring(s[0..i].to_string());
+        let s2 = longest_nice_substring(s[i+1..].to_string());
+        return if s1.len() >= s2.len() {s1} else {s2};
+    }
+
+    return s;
+}
+
+#[test]
+fn test_longest_nice_substring() {
+    let example = String::from("YazaAay");
+    let ret = longest_nice_substring(example);
+    println!("{}", ret);
+}
+
 
 /**
 * 1765.
