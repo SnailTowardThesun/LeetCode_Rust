@@ -1343,6 +1343,62 @@ fn test_permute_unique() {
 }
 
 /**
+* 51
+*/
+
+fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
+    fn make_ans(pos: Vec<Vec<usize>>) -> Vec<Vec<String>> {
+        let mut ans = vec![];
+        for cols in pos.iter() {
+            let len = cols.len();
+            let mut solution = vec![];
+            for &line in cols {
+                let mut s = ".".repeat(len).to_string();
+                s.replace_range(line..line + 1, "Q");
+                solution.push(s);
+            }
+            ans.push(solution);
+        }
+        ans
+    }
+    fn not_valid(cols: &Vec<usize>, cur: usize) -> bool {
+        cols.iter().enumerate().any(|(r, &c)| {
+            cur == c
+                || cols.len() == r
+                || (cur as i64 - c as i64).abs() == (cols.len() as i64 - r as i64).abs()
+        })
+    }
+    fn dfs(n: usize, cols: &mut Vec<usize>, ans: &mut Vec<Vec<usize>>) {
+        if cols.len() == n {
+            ans.push(cols.to_vec());
+            return;
+        }
+        for cur in 0..n {
+            if not_valid(cols, cur) {
+                continue;
+            }
+            cols.push(cur);
+            dfs(n, cols, ans);
+            cols.pop();
+        }
+    }
+    let mut ans = vec![];
+    dfs(n as usize, &mut vec![], &mut ans);
+    return make_ans(ans)
+}
+
+#[test]
+fn test_solve_n_queens() {
+    let ret = solve_n_queens(4);
+    for i in ret.iter() {
+        for j in i.iter() {
+            print!("{}\n", j);
+        }
+        println!("-------------------------------");
+    }
+}
+
+/**
 * 62 Unique Paths
 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
