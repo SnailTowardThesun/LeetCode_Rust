@@ -1399,6 +1399,42 @@ fn test_solve_n_queens() {
 }
 
 /**
+* 52.
+*/
+fn total_n_queens(n: i32) -> i32 {
+    let ret = solve_n_queens(n);
+    return ret.len() as i32;
+}
+
+#[test]
+fn test_total_n_queens() {
+    let ret = total_n_queens(10);
+    println!("{}", ret);
+}
+
+/**
+* 55.
+*/
+fn can_jump(nums: Vec<i32>) -> bool {
+    let (mut start, mut end) = (0, 0);
+    while start <= end {
+        end = end.max(nums[start] as usize + start);
+        if end >= nums.len() - 1 {
+            return true;
+        }
+        start += 1;
+    }
+    return end >= nums.len() - 1;
+}
+
+#[test]
+fn test_can_jump() {
+    let example = vec![2,3,1,1,4];
+    let ret = can_jump(example);
+    println!("{}", ret);
+}
+
+/**
 * 62 Unique Paths
 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
