@@ -1254,6 +1254,41 @@ fn test_combination_sum2() {
     }
 }
 
+/**
+* 46.
+*/
+fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
+    let mut ret = vec![];
+
+    if nums.len() == 1 {
+        ret.push(nums);
+        return  ret
+    }
+
+    for i in 0..nums.len() {
+        let mut clone = nums.clone();
+        let current = clone.remove(i);
+        let tmp = permute(clone);
+        for mut r in tmp {
+            r.insert(0, current);
+            ret.push(r);
+        }
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_permute() {
+    let nums = vec![1,2,3];
+    let ret = permute(nums);
+    for i in 0..ret.len() {
+        for j in 0..ret[i].len() {
+            print!("{}\t", ret[i][j])
+        }
+        println!("");
+    }
+}
 
 /**
 * 62 Unique Paths
