@@ -1323,7 +1323,7 @@ fn permute_unique(nums: Vec<i32>) -> Vec<Vec<i32>> {
         tmp.insert(duplicated_ret[i].clone(), true);
     }
 
-    for (k, v) in tmp {
+    for (k, _) in tmp {
         ret.push(k);
     }
 
@@ -2670,6 +2670,32 @@ fn number_of_matches(n: i32) -> i32 {
 #[test]
 fn test_number_of_matches() {
     number_of_matches(11);
+}
+
+/**
+* 1748.
+*/
+fn sum_of_unique(nums: Vec<i32>) -> i32 {
+    let mut container = vec![0; 100];
+
+    for i in 0..nums.len() {
+        container[nums[i] as usize - 1] += 1;
+    }
+
+    let mut sum = 0;
+    for i in 0..100 {
+        if container[i] == 1 {
+            sum += i + 1;
+        }
+    }
+    return sum as i32;
+}
+
+#[test]
+fn test_sum_of_unique() {
+    let example = vec![1,2,3,4,5];
+    let ret = sum_of_unique(example);
+    print!("ret: {}\n", ret);
 }
 
 /**
