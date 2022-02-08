@@ -2451,6 +2451,39 @@ fn test_number_of_steps() {
 }
 
 /**
+* 1405.
+*/
+fn longest_diverse_string(a: i32, b: i32, c: i32) -> String {
+    let mut ch = vec![(a, 'a'), (b, 'b'), (c, 'c')];
+    let mut ans = vec![];
+    loop {
+        ch.sort_unstable();
+        if ch[2].0 == 0 {
+            break;
+        }
+        let len = ans.len();
+        if len >= 2 && ans[len - 1] == ans[len - 2] && ans[len - 1] == ch[2].1 {
+            if ch[1].0 > 0 {
+                ch[1].0 -= 1;
+                ans.push(ch[1].1);
+            } else {
+                ch[2].0 -= 1;
+            }
+        } else {
+            ch[2].0 -= 1;
+            ans.push(ch[2].1);
+        }
+    }
+    ans.iter().collect()
+}
+
+#[test]
+fn test_longest_diverse_string() {
+    let ret = longest_diverse_string(0,8,11);
+    print!("{}\n", ret);
+}
+
+/**
 * 1423. Maximum Points You Can Obtain from Cards
 */
 fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
@@ -2716,6 +2749,28 @@ fn test_reverse_prefix() {
     let ret = reverse_prefix(example, 'd');
     println!("{}", ret);
 }
+
+/**
+* 2006.
+*/
+fn count_k_difference(nums: Vec<i32>, k: i32) -> i32 {
+    let mut mp = HashMap::new();
+    let mut ans = 0;
+    nums.iter().for_each(|x| {
+        ans += *mp.get(&(*x + k)).unwrap_or(&0) + *mp.get(&(*x-k)).unwrap_or(&0);
+        *mp.entry(*x).or_insert(0) += 1;
+    });
+    ans
+}
+
+#[test]
+fn test_count_k_difference() {
+    let example = vec![3,2,1,5,4];
+    // let example = vec![1,2,2,1];
+    let ret = count_k_difference(example, 2);
+    println!("{}", ret);
+}
+
 
 /*
  * find max(A[i] - A[j]) and  i < j
