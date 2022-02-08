@@ -1474,6 +1474,24 @@ fn test_merge() {
 }
 
 /**
+* 58.
+*/
+fn insert(intervals: Vec<Vec<i32>>, new_interval: Vec<i32>) -> Vec<Vec<i32>> {
+    let mut intervals = intervals;
+
+    intervals.push(new_interval);
+    return merge(intervals);
+}
+
+#[test]
+fn test_insert() {
+    let example = vec![vec![1,3], vec![6,9]];
+    let new = vec![2,5];
+    let ret = insert(example, new);
+    println!("{}", ret.len())
+}
+
+/**
 * 62 Unique Paths
 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
