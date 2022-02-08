@@ -1435,6 +1435,45 @@ fn test_can_jump() {
 }
 
 /**
+* 56
+*/
+fn merge(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    let mut ret = vec![];
+
+    let mut intervals = intervals;
+
+    intervals.sort();
+
+    let mut start = intervals[0][0];
+    let mut end = intervals[0][1];
+
+    for i in 1..intervals.len() {
+        let target = intervals.get(i).unwrap();
+
+        // add new start and end
+        if target[0] > end {
+            ret.push(vec![start, end]);
+            start = target[0];
+            end = target[1];
+        }
+
+        if target[1] > end {
+            end = target[1]
+        }
+    }
+    ret.push(vec![start, end]);
+
+    return ret;
+}
+
+#[test]
+fn test_merge() {
+    let example = vec![vec![1, 4], vec![4, 5]];
+    let ret = merge(example);
+    println!("{}", ret.len());
+}
+
+/**
 * 62 Unique Paths
 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
