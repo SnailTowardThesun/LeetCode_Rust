@@ -2689,139 +2689,6 @@ fn test_simplified_fractions() {
 }
 
 /**
-* 1716.
-*/
-fn total_money(n: i32) -> i32 {
-    if n < 0 {
-        return 0;
-    }
-
-    let mut total = 1;
-    let mut begin = 1;
-    for i in 1..n {
-        if i % 7 == 0 {
-            begin += 1;
-        }
-
-        total += begin + i % 7;
-    }
-    return total;
-}
-
-#[test]
-fn test_total_money() {
-    let ret = total_money(10);
-    assert_eq!(ret, 37);
-}
-
-/**
-* 1763.
-*/
-fn longest_nice_substring(s: String) -> String {
-    let mut upper_letter = vec![false; 26];
-    let mut lower_letter = vec![false; 26];
-
-    for i in s.chars() {
-        if i.is_ascii_uppercase() {
-            upper_letter[i as usize - 'A' as usize] = true;
-        } else {
-            lower_letter[i as usize - 'a' as usize] = true;
-        }
-    }
-
-    for (i, ch) in s.chars().enumerate() {
-        if upper_letter[ch.to_ascii_uppercase() as usize - 'A' as usize] == true && lower_letter[ch.to_ascii_lowercase() as usize - 'a' as usize] == true {
-            continue;
-        }
-
-        let s1 = longest_nice_substring(s[0..i].to_string());
-        let s2 = longest_nice_substring(s[i+1..].to_string());
-        return if s1.len() >= s2.len() {s1} else {s2};
-    }
-
-    return s;
-}
-
-#[test]
-fn test_longest_nice_substring() {
-    let example = String::from("YazaAay");
-    let ret = longest_nice_substring(example);
-    println!("{}", ret);
-}
-
-
-/**
-* 1765.
-*/
-fn highest_peak(is_water: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
-    let m = is_water.len();
-    let n = is_water[0].len();
-
-    let mut ret = vec![vec![0; n]; m];
-    let mut container = VecDeque::new();
-
-    let mut visited = vec![vec![false; n]; m];
-    for i in 0..m {
-        for j in 0..n {
-            if is_water[i][j] == 1 {
-                visited[i][j] = true;
-                container.push_back((i, j));
-            }
-        }
-    }
-
-    let mut target = 1;
-    while !container.is_empty() {
-        for _ in 0..container.len() {
-            let (i, j) = container.pop_front().unwrap();
-            for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)] {
-                if x < m && y < n && !visited[x][y] {
-                    ret[x][y] = target;
-                    visited[x][y] = true;
-                    container.push_back((x, y));
-                }
-            }
-
-        }
-
-        target = target + 1;
-    }
-
-    return ret;
-}
-
-#[test]
-fn test_highest_peak() {
-    highest_peak(vec![]);
-}
-
-/*
- * 1796. Second Largest Digit in a String
- */
-fn second_highest(s: String) -> i32 {
-    let mut ar = [false; 10];
-
-    s.as_bytes()
-        .iter()
-        .filter(|x| x.is_ascii_digit())
-        .map(|x| x - b'0')
-        .for_each(|x| ar[x as usize] = true);
-
-    ar.iter()
-        .enumerate()
-        .filter_map(|(ind, val)| if *val { Some(ind as i32) } else { None })
-        .rev()
-        .nth(1)
-        .unwrap_or(-1)
-}
-
-#[test]
-fn test_second_highest() {
-    second_highest(String::from("1234"));
-}
-
-
-/*
  * 1662. check if two string arrays are equivalent
  */
 fn array_strings_are_equal(word1: Vec<String>, word2: Vec<String>) -> bool {
@@ -2851,8 +2718,34 @@ fn test_number_of_matches() {
 }
 
 /**
-* 1748.
-*/
+ * 1716.
+ */
+fn total_money(n: i32) -> i32 {
+    if n < 0 {
+        return 0;
+    }
+
+    let mut total = 1;
+    let mut begin = 1;
+    for i in 1..n {
+        if i % 7 == 0 {
+            begin += 1;
+        }
+
+        total += begin + i % 7;
+    }
+    return total;
+}
+
+#[test]
+fn test_total_money() {
+    let ret = total_money(10);
+    assert_eq!(ret, 37);
+}
+
+/**
+ * 1748.
+ */
 fn sum_of_unique(nums: Vec<i32>) -> i32 {
     let mut container = vec![0; 100];
 
@@ -2871,21 +2764,126 @@ fn sum_of_unique(nums: Vec<i32>) -> i32 {
 
 #[test]
 fn test_sum_of_unique() {
-    let example = vec![1,2,3,4,5];
+    let example = vec![1, 2, 3, 4, 5];
     let ret = sum_of_unique(example);
     print!("ret: {}\n", ret);
 }
 
 /**
-* 2000
-*/
+ * 1763.
+ */
+fn longest_nice_substring(s: String) -> String {
+    let mut upper_letter = vec![false; 26];
+    let mut lower_letter = vec![false; 26];
+
+    for i in s.chars() {
+        if i.is_ascii_uppercase() {
+            upper_letter[i as usize - 'A' as usize] = true;
+        } else {
+            lower_letter[i as usize - 'a' as usize] = true;
+        }
+    }
+
+    for (i, ch) in s.chars().enumerate() {
+        if upper_letter[ch.to_ascii_uppercase() as usize - 'A' as usize] == true && lower_letter[ch.to_ascii_lowercase() as usize - 'a' as usize] == true {
+            continue;
+        }
+
+        let s1 = longest_nice_substring(s[0..i].to_string());
+        let s2 = longest_nice_substring(s[i + 1..].to_string());
+        return if s1.len() >= s2.len() { s1 } else { s2 };
+    }
+
+    return s;
+}
+
+#[test]
+fn test_longest_nice_substring() {
+    let example = String::from("YazaAay");
+    let ret = longest_nice_substring(example);
+    println!("{}", ret);
+}
+
+
+/**
+ * 1765.
+ */
+fn highest_peak(is_water: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    let m = is_water.len();
+    let n = is_water[0].len();
+
+    let mut ret = vec![vec![0; n]; m];
+    let mut container = VecDeque::new();
+
+    let mut visited = vec![vec![false; n]; m];
+    for i in 0..m {
+        for j in 0..n {
+            if is_water[i][j] == 1 {
+                visited[i][j] = true;
+                container.push_back((i, j));
+            }
+        }
+    }
+
+    let mut target = 1;
+    while !container.is_empty() {
+        for _ in 0..container.len() {
+            let (i, j) = container.pop_front().unwrap();
+            for (x, y) in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)] {
+                if x < m && y < n && !visited[x][y] {
+                    ret[x][y] = target;
+                    visited[x][y] = true;
+                    container.push_back((x, y));
+                }
+            }
+        }
+
+        target = target + 1;
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_highest_peak() {
+    highest_peak(vec![]);
+}
+
+/**
+ * 1796. Second Largest Digit in a String
+ */
+fn second_highest(s: String) -> i32 {
+    let mut ar = [false; 10];
+
+    s.as_bytes()
+        .iter()
+        .filter(|x| x.is_ascii_digit())
+        .map(|x| x - b'0')
+        .for_each(|x| ar[x as usize] = true);
+
+    ar.iter()
+        .enumerate()
+        .filter_map(|(ind, val)| if *val { Some(ind as i32) } else { None })
+        .rev()
+        .nth(1)
+        .unwrap_or(-1)
+}
+
+#[test]
+fn test_second_highest() {
+    second_highest(String::from("1234"));
+}
+
+/**
+ * 2000
+ */
 fn reverse_prefix(word: String, ch: char) -> String {
     let pos = word.find(ch);
     if pos == None {
         return word;
     }
 
-    return word[0..pos.unwrap()+1].chars().rev().collect::<String>() + &word[(pos.unwrap() + 1)..];
+    return word[0..pos.unwrap() + 1].chars().rev().collect::<String>() + &word[(pos.unwrap() + 1)..];
 }
 
 #[test]
