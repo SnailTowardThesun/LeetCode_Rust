@@ -1545,12 +1545,7 @@ fn generate_matrix(n: i32) -> Vec<Vec<i32>> {
 #[test]
 fn test_generate_matrix() {
     let ret = generate_matrix(3);
-    for i in 0..ret.len() {
-        for j in 0..ret[i].len() {
-            print!("{}\t", ret[i][j]);
-        }
-        println!();
-    }
+    println!("{}", ret.len());
 }
 
 /**
@@ -2660,6 +2655,37 @@ fn max_power(s: String) -> i32 {
 fn test_max_power() {
     let ret = max_power(String::from("leetcode"));
     print!("{}", ret);
+}
+
+/**
+* 1447.
+*/
+fn simplified_fractions(n: i32) -> Vec<String> {
+    let mut ret = vec![];
+
+    fn helper(a: i32, b :i32) -> i32 {
+        return if b == 0 {a} else {helper(b, a % b)};
+    }
+
+    for i in 1..n+1 {
+        for j in 1..i {
+            println!("i: {}, j: {}", i, j);
+            if helper(i, j) == 1 {
+                ret.push(format!("{}/{}", j,i));
+            }
+        }
+    }
+
+
+    return ret;
+}
+
+#[test]
+fn test_simplified_fractions() {
+    let ret = simplified_fractions(4);
+    for x in ret {
+        print!("{}\t", x);
+    }
 }
 
 /**
