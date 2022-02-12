@@ -2556,6 +2556,40 @@ fn test_num_enclaves() {
 }
 
 /**
+* 1189.
+*/
+fn max_number_of_balloons(text: String) -> i32 {
+    let mut container = HashMap::new();
+    container.insert('b', 0);
+    container.insert('a', 0);
+    container.insert('l', 0);
+    container.insert('o', 0);
+    container.insert('n', 0);
+
+    for i in text.chars() {
+        if container.contains_key(&i) {
+            *container.get_mut(&i).unwrap() += 1;
+        }
+    }
+
+    let mut ret = i32::MAX;
+    ret = ret.min(*container.get(&'b').unwrap());
+    ret = ret.min(*container.get(&'a').unwrap());
+    ret = ret.min(*container.get(&'l').unwrap()/2);
+    ret = ret.min(*container.get(&'o').unwrap()/2);
+    ret = ret.min(*container.get(&'n').unwrap());
+
+    return ret;
+}
+
+#[test]
+fn test_max_number_of_balloons() {
+    let example = String::from("nlaebolko");
+    let ret = max_number_of_balloons(example);
+    println!("{}", ret);
+}
+
+/**
  * 1220.
  */
 fn count_vowel_permutation(n: i32) -> i32 {
