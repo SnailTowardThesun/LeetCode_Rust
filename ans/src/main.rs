@@ -3025,6 +3025,33 @@ fn test_highest_peak() {
 }
 
 /**
+* 1791.
+*/
+fn find_center(edges: Vec<Vec<i32>>) -> i32 {
+    let mut container = HashMap::new();
+
+    for i in edges {
+        for j in i {
+            if container.contains_key(&j) {
+                return j;
+            }
+
+            container.insert(j, true);
+
+        }
+    }
+
+    return 0;
+}
+
+#[test]
+fn test_find_center() {
+    let example = vec![vec![1,2], vec![1,3]];
+    let ret = find_center(example);
+    println!("{}", ret);
+}
+
+/**
  * 1796. Second Largest Digit in a String
  */
 fn second_highest(s: String) -> i32 {
