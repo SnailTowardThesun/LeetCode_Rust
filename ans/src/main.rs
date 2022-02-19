@@ -1549,6 +1549,34 @@ fn test_generate_matrix() {
 }
 
 /**
+ * 60
+ */
+fn get_permutation(n: i32, k: i32) -> String {
+    let (mut seq, mut res) = (String::with_capacity(n as usize), String::with_capacity(n as usize));
+    (1..=(n as u8)).for_each(|x| { seq.push((b'0' + x) as char); });
+    let (mut base, mut k) = ((1..=(n - 1)).fold(1, |m, x| { x * m }), k - 1);
+
+    for i in (1..=(n - 1)).rev() {
+        let pos = (k / base) as usize;
+        let c = seq.chars().nth(pos);
+        res.push(c.unwrap());
+        seq.remove(pos);
+        k %= base;
+        base /= i;
+    }
+
+    res.push(seq.chars().nth(0).unwrap());
+
+    res
+}
+
+#[test]
+fn test_get_permutation() {
+    let ret = get_permutation(3, 3);
+    println!("{}", ret);
+}
+
+/**
 * 62 Unique Paths
 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
