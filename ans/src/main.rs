@@ -2380,6 +2380,51 @@ fn test_knight_probability() {
 }
 
 /**
+* 717.
+*/
+fn is_one_bit_character(bits: Vec<i32>) -> bool {
+    if bits[bits.len() - 1] == 1 {
+        return false;
+    }
+
+    if bits.len() > 2 {
+        if bits[bits.len() - 1] == 0 && bits[bits.len() - 2] == 0 {
+            return true;
+        }
+    }
+
+    let mut ret = false;
+
+    let mut container = vec![];
+    for i in bits {
+        if i == 1 {
+            if container.len() == 1 {
+                container.clear();
+                ret = false;
+            } else {
+                container.push(i);
+            }
+        } else {
+            if container.len() == 1 {
+                container.clear();
+                ret = false;
+            } else {
+                ret = true;
+            }
+        }
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_is_one_bit_character() {
+    let example = vec![1,1,1,0];
+    let ret = is_one_bit_character(example);
+    println!("ret: {}", ret);
+}
+
+/**
  * 747.
  */
 fn dominant_index(nums: Vec<i32>) -> i32 {
