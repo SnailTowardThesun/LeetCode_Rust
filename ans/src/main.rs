@@ -1822,6 +1822,23 @@ fn test_is_number() {
 }
 
 /**
+ * 67.
+ */
+fn add_binary(a: String, b: String) -> String {
+    let ia = i128::from_str_radix(&a, 2).unwrap();
+    let ib = i128::from_str_radix(&b, 2).unwrap();
+    return format!("{:b}", (ia+ib)).to_string();
+}
+
+#[test]
+fn test_add_binary() {
+    let a = String::from("11");
+    let b = String::from("1");
+    let ret = add_binary(a, b);
+    println!("{}", ret);
+}
+
+/**
 * 72. Edit Distance
 * Given two words word1 and word2, find the minimum number of operations required to convert word1 to word2.
 
