@@ -1577,6 +1577,57 @@ fn test_get_permutation() {
 }
 
 /**
+ * 61.
+ */
+fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
+    let mut head = match head {
+        Some(a) => a,
+        None => return None,
+    };
+
+    let mut size = 1;
+    let mut pos = &head;
+
+    while let Some(ref cur) = pos.next {
+        size += 1;
+        pos = cur;
+    }
+
+    println!("size: {}", size);
+
+    let mut target = size - k % size;
+    if target == size {
+        return Some(head);
+    }
+
+
+    let mut cur = &mut head;
+    while target > 1 {
+        cur = cur.next.as_mut().unwrap();
+        target -= 1;
+    }
+
+    let mut ret = std::mem::replace(&mut cur.next, None).unwrap();
+    let mut cur = &mut ret;
+    while let Some(ref mut next) = cur.next {
+        cur = next;
+    }
+    cur.next = Some(head);
+
+    return Some(ret);
+}
+
+#[test]
+fn test_rotate_right() {
+    let head = Box::new(ListNode::new(2));
+    let ret = rotate_right(Some(head), 1);
+    while let Some(node) = ret.as_ref() {
+        println!("{}", node.val);
+        break;
+    }
+}
+
+/**
 * 62 Unique Paths
 * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
 
