@@ -1893,12 +1893,6 @@ fn min_distance(word1: String, word2: String) -> i32 {
                     std::cmp::min(std::cmp::min(steps[i][j], steps[i + 1][j]), steps[i][j + 1]) + 1;
             }
         }
-
-        for i in 0..m + 1 {
-            println!("{:?}", steps[i]);
-        }
-
-        println!("\t");
     }
     return steps[m][n] as i32;
 }
@@ -2344,6 +2338,19 @@ fn test_binary_tree_paths() {
 }
 
 /**
+* 258.
+*/
+fn add_digits(num: i32) -> i32 {
+    return (num - 1) % 9 + 1;
+}
+
+#[test]
+fn test_add_digits() {
+    let ret = add_digits(35);
+    println!("{}", ret);
+}
+
+/**
 * 334.
 */
 fn increasing_triplet(nums: Vec<i32>) -> bool {
@@ -2486,7 +2493,22 @@ fn test_third_max() {
     print!("{}", ret);
 }
 
-/*
+/**
+* 521.
+*/
+fn find_lu_slength(a: String, b: String) -> i32 {
+    return if a == b {-1} else {(a.len().max(b.len())) as i32};
+}
+
+#[test]
+fn test_find_lu_slength() {
+    let a = String::from("aba");
+    let b = String::from("dcd");
+    let ret = find_lu_slength(a, b);
+    println!("{}", ret);
+}
+
+/**
  * 538. Convert BST to Greater Tree
  */
 fn convert_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
