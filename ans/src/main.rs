@@ -2567,6 +2567,43 @@ fn test_find_min_difference() {
 }
 
 /**
+* 599
+*/
+fn find_restaurant(list1: Vec<String>, list2: Vec<String>) -> Vec<String> {
+    let mut ret = vec![];
+    let mut container: HashMap<String, usize>= HashMap::new();
+
+
+    for (i,item) in list1.iter().enumerate() {
+        container.insert(item.to_string(), i);
+    }
+
+    let mut min = usize::MAX;
+    for (i, item) in list2.iter().enumerate() {
+        if let Some(j) = container.get(item) {
+            if i + j < min {
+                ret = vec![item.to_string()];
+                min = i + j;
+            } else if i + j == min {
+                ret.push(item.to_string());
+            }
+        }
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_find_restaurant() {
+    let l1 = vec! [String::from("Shogun"), String::from("Tapioca Express"), String::from("Burger King"), String::from("KFC")];
+    let l2 = vec![String::from("Piatti"), String::from("The Grill at Torrey Pines"), String::from("Hungry Hunter Steakhouse"), String::from("Shogun")];
+    let ret = find_restaurant(l1, l2);
+    for i in ret {
+        println!("{}", i)
+    }
+}
+
+/**
  * 688
  */
 fn knight_probability(n: i32, k: i32, row: i32, column: i32) -> f64 {
