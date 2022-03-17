@@ -2351,6 +2351,26 @@ fn test_add_digits() {
 }
 
 /**
+* 299.
+*/
+fn get_hint(secret: String, guess: String) -> String {
+    let ret = String::from("");
+
+    return ret;
+}
+
+#[test]
+fn test_get_hint() {
+    let secret = String::from("1807");
+    let guess = String::from("7810");
+
+    let ret = get_hint(secret, guess);
+    println!("{}", ret)
+}
+
+
+
+/**
 * 334.
 */
 fn increasing_triplet(nums: Vec<i32>) -> bool {
