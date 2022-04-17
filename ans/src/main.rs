@@ -2491,6 +2491,37 @@ fn test_equal_list() {
     println!("{}", ret);
 }
 
+/**
+* 386.
+*/
+fn lexical_order(n: i32) -> Vec<i32> {
+    fn helper(cur: i32, max: i32, ret: &mut Vec<i32>) {
+        if cur > max {
+            return;
+        }
+        ret.push(cur);
+        for i in 0..10 {
+            helper(cur * 10 + i, max, ret);
+        }
+    }
+
+    let mut ret = vec![];
+
+    for i in 1..10 {
+        helper(i, n, &mut ret)
+    }
+
+    return ret;
+}
+
+#[test]
+fn test_lexical_order() {
+    let ret = lexical_order(13);
+    for i in 0..ret.len() {
+        print!("{} ", ret[i]);
+    }
+}
+
 
 /*
  * 414. third max number
@@ -2704,6 +2735,23 @@ fn test_is_one_bit_character() {
     let example = vec![1,1,1,0];
     let ret = is_one_bit_character(example);
     println!("ret: {}", ret);
+}
+
+/**
+* 720.
+*/
+fn longest_word(words: Vec<String>) -> String {
+    let mut ret = String::from("");
+
+    return ret;
+}
+
+#[test]
+fn test_longest_word() {
+    let example = vec![String::from("w"), String::from("wo"), String::from("wor"), String::from("worl"), String::from("world")];
+    let ret = longest_word(example);
+    println!("{}", ret);
+
 }
 
 /**
