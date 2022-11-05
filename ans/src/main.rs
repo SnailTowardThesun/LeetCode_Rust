@@ -2910,6 +2910,82 @@ fn test_min_diff_in_bst() {
 }
 
 /**
+* 797
+**/
+fn all_paths_source_target(graph: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    // bfs
+    let mut ret = vec![];
+
+    use std::collections::VecDeque;
+
+    let mut path : Vec<i32> = vec![0];
+    let mut container = VecDeque::from(vec![path]);
+
+    let mut cc = 0;
+    while container.len()  > 0{
+        cc+=1;
+        let mut current = container.pop_front().unwrap().clone();
+        let node = current[current.len() - 1];
+        let tmp_c = graph[node as usize].clone();
+        for i in tmp_c {
+            let mut tmp_path = current.clone();
+            tmp_path.push(i );
+            if i == graph.len() as i32 - 1 {
+                ret.push(tmp_path);
+            } else {
+                container.push_back(tmp_path);
+            }
+        }
+    }
+
+    return ret;
+}
+
+// fn all_paths_source_target(graph: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+// dfs
+//     fn dfs(graph: &Vec<Vec<i32>>, result: &mut Vec<Vec<i32>>, node: i32, path: &mut Vec<i32>) {
+//         path.push(node);
+//
+//         if node == graph.len() as i32 - 1 {
+//             result.push(path.clone());
+//             return
+//         }
+//
+//         let next_node = graph[node as usize].clone();
+//         for i in next_node {
+//             dfs(graph, result, i, path);
+//             path.remove(path.len() - 1);
+//         }
+//
+//     }
+//
+//     let mut ret = vec![];
+//     let mut path = vec![];
+//
+//     dfs(&graph, &mut ret, 0, &mut path);
+//
+//     return ret;
+// }
+
+#[test]
+fn test_all_paths_source_target() {
+    let eg = vec![
+        vec![1, 2],
+        vec![3],
+        vec![3],
+        vec![]
+    ];
+
+    let ret = all_paths_source_target(eg);
+    for i in ret {
+        for j in i {
+            print!("{}->", j);
+        }
+        println!();
+    }
+}
+
+/**
 * 884.
 */
 fn uncommon_from_sentences(s1: String, s2: String) -> Vec<String> {
