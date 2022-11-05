@@ -203,6 +203,69 @@ fn test_binary_tree_pre_order() {
     binaryTreePreOrder(Some(root))
 }
 
+struct UnionFind {
+    root: Vec<i32>
+}
+
+impl UnionFind {
+    fn union(&mut self, target1: i32, target2: i32) {
+        let r1 = self.find(target1 as usize);
+        let r2 = self.find(target2 as usize);
+        if r1 != r2 {
+            for i in 0..self.root.len() {
+               if self.root[i] == r2 {
+                   self.root[i] = r1;
+               }
+            }
+        }
+
+        for i in 0..self.root.len() {
+            print!("{}\t", self.root[i]);
+        }
+        println!();
+    }
+
+    fn find(&self, t: usize) -> i32 {
+        return self.root[t];
+    }
+
+    fn connected(&self, t1: i32, t2: i32) -> bool{
+        self.root[t1 as usize] == self.root[t2 as usize]
+    }
+
+    fn new(size: usize) -> UnionFind {
+
+        let mut obj = UnionFind{
+            root: vec![0; size]
+        };
+
+        for i in 0..obj.root.len() {
+            obj.root[i] = i as i32;
+        }
+
+        return obj
+    }
+
+
+}
+#[test]
+fn test_union_find() {
+    let mut obj = UnionFind::new(10);
+
+    obj.union(1, 2);
+    obj.union(2, 5);
+    obj.union(5, 6);
+    obj.union(6, 7);
+    obj.union(3, 8);
+    obj.union(8, 9);
+
+    println!("{}", obj.connected(1, 5));
+    println!("{}", obj.connected(5, 7));
+    println!("{}", obj.connected(4, 9));
+
+}
+
+
 fn main() {
     println!("Hello base algorithm");
 }
