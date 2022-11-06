@@ -3507,6 +3507,67 @@ fn test_simplified_fractions() {
 }
 
 /**
+* 1584
+*/
+fn min_cost_connect_points(points: Vec<Vec<i32>>) -> i32 {
+    // using Kruskal
+
+    struct Node {
+        x: usize,
+        y: usize,
+        distance: i32
+    }
+
+    let mut container: Vec<Node> = vec![];
+    // calculate all distance
+    for i in 0..points.len() {
+        for j in i+1..points.len() {
+            let dis = i32::abs(points[i][0] - points[j][0]) + i32::abs(points[i][1]-points[j][1]);
+            container.push(Node {x: i, y:j, distance:dis})
+        }
+    }
+
+    container.sort_by(|a,b| a.distance.cmp(&b.distance));
+    for i in 0..container.len() {
+        println!("{}, {}: {}", container[i].x, container[i].y, container[i].distance);
+    }
+
+    let mut count = 0;
+    let mut obj = OrderedUnion::new(points.len());
+    let mut ret = 0;
+
+    for i in 0..container.len() {
+       if count == points.len() - 1 {
+           break;
+       }
+
+       if obj.connected(container[i].x as i32, container[i].y as i32) {
+           continue;
+       }
+
+       obj.union(container[i].x as i32, container[i].y as i32);
+       ret += container[i].distance;
+       count+=1;
+    }
+
+    ret
+}
+
+
+#[test]
+fn test_min_cost_connect_points() {
+    let obj = vec![
+        vec![0,0],
+        vec![2,2],
+        vec![3, 10],
+        vec![5, 2],
+        vec![7,10]
+    ];
+    let ret = min_cost_connect_points(obj);
+    println!("result: {}", ret);
+}
+
+/**
  * 1662. check if two string arrays are equivalent
  */
 fn array_strings_are_equal(word1: Vec<String>, word2: Vec<String>) -> bool {
@@ -3524,6 +3585,20 @@ fn test_array_strings_are_equal() {
 }
 
 /**
+* 1678
+*/
+fn interpret(command: String) -> String {
+    command.replace("()", "o").replace("(al)", "al")
+}
+
+#[test]
+fn test_interpret() {
+    let obj = String::from("G()(al)");
+    let ret = interpret(obj);
+    println!("{}", ret);
+}
+
+/**
 * 1688.
 */
 fn number_of_matches(n: i32) -> i32 {
@@ -3534,6 +3609,7 @@ fn number_of_matches(n: i32) -> i32 {
 fn test_number_of_matches() {
     number_of_matches(11);
 }
+
 
 /**
  * 1716.
