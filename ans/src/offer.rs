@@ -52,3 +52,68 @@ fn test_cqueue() {
 
     println!("{}", ret_2)
 }
+
+/**
+* offer.30
+*/
+
+struct MinStack {
+    container: Vec<i32>,
+    helper: Vec<i32>
+}
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl MinStack {
+
+    /** initialize your data structure here. */
+    fn new() -> Self {
+        MinStack{
+            container: Vec::new(),
+            helper: Vec::new()
+        }
+    }
+
+    fn push(&mut self, x: i32) {
+        self.container.push(x);
+        if self.helper.is_empty() || x <= *self.helper.last().unwrap() {
+            self.helper.push(x);
+        }
+    }
+
+    fn pop(&mut self) {
+        let t = self.container.pop();
+        if *self.helper.last().unwrap() == t.unwrap() {
+           self.helper.pop();
+        }
+    }
+
+    fn top(&self) -> i32 {
+        *self.container.first().unwrap()
+    }
+
+    fn min(&self) -> i32 {
+        *self.helper.last().unwrap()
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * let obj = MinStack::new();
+ * obj.push(x);
+ * obj.pop();
+ * let ret_3: i32 = obj.top();
+ * let ret_4: i32 = obj.min();
+ */
+#[test]
+fn test_min_stack() {
+    let mut obj = MinStack::new();
+    obj.push(1);
+    let ret_3: i32 = obj.top();
+    let ret_4: i32 = obj.min();
+    obj.pop();
+
+    println!("{}, {}", ret_3, ret_4)
+}
