@@ -1,3 +1,5 @@
+mod offer;
+
 use std::collections::HashMap;
 use std::option::Option;
 
