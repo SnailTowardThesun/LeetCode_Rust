@@ -108,6 +108,61 @@ fn test_cqueue() {
 }
 
 /**
+* offer.24
+*/
+fn reverse_list(head: Option<Box<ListNode>>) ->Option<Box<ListNode>> {
+    let mut container = vec![];
+    let mut p = &head;
+    while let Some(node) = p {
+        container.push(node.val);
+        p = &node.next;
+    }
+
+    container.reverse();
+    let mut ret = Some(Box::new(ListNode{
+        val: 0,
+        next: None,
+    }));
+
+    let mut curr = ret.as_mut();
+    for i in container {
+        if let Some(mut node) = curr {
+            node.next = Some(Box::new(ListNode{
+                val: i,
+                next: None,
+            }));
+            curr = node.next.as_mut()
+        }
+    }
+
+    return ret.unwrap().next;
+}
+
+#[test]
+fn test_reverse_list() {
+    let mut head = Some(Box::new(ListNode{
+        val: 1,
+        next: None,
+    }));
+
+    let mut curr = head.as_mut();
+    for i in 1..10 {
+      if let Some(mut node) = curr {
+          node.next = Some(Box::new(ListNode {
+              val: i,
+              next: None,
+          }));
+          curr = node.next.as_mut();
+      }
+    }
+
+    let ret = reverse_list(head);
+    for i in ret {
+        println!("{}", i.val)
+    }
+}
+
+/**
 * offer.30
 */
 
