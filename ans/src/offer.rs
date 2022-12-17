@@ -1,3 +1,57 @@
+// Author: hankun1991@outlook.com
+
+use std::borrow::BorrowMut;
+
+/**
+* offer.06
+*/
+
+// Definition for singly-linked list.
+#[derive(PartialEq, Eq, Clone, Debug)]
+pub struct ListNode {
+  pub val: i32,
+  pub next: Option<Box<ListNode>>
+}
+
+impl ListNode {
+  #[inline]
+  fn new(val: i32) -> Self {
+    ListNode {
+      next: None,
+      val
+    }
+  }
+}
+
+fn reverse_print(head: Option<Box<ListNode>>) ->Vec<i32> {
+    let mut ret = vec![];
+    let mut pos = &head;
+    while let Some(node) = pos {
+        ret.push(node.val);
+        pos = &node.next;
+    }
+
+    ret.reverse();
+    return ret;
+}
+
+#[test]
+fn test_reverse_print() {
+    let mut head = Box::new(ListNode{
+        val: 1,
+        next: None,
+    });
+
+    head.next = Some(Box::new(ListNode{
+        val: 2,
+        next: None,
+    }));
+
+    let ret = reverse_print(Some(head));
+    for i in ret {
+        println!("{}", i)
+    }
+}
 
 /**
 * offer.09

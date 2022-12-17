@@ -1,4 +1,5 @@
 mod offer;
+mod weekly;
 
 use std::collections::HashMap;
 use std::option::Option;
