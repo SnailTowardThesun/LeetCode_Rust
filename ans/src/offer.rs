@@ -138,6 +138,20 @@ fn reverse_list(head: Option<Box<ListNode>>) ->Option<Box<ListNode>> {
     return ret.unwrap().next;
 }
 
+fn reverse_list_no_extra_space(head: Option<Box<ListNode>>) ->Option<Box<ListNode>> {
+    let mut pre = None;
+    let mut cur = head;
+    while let Some(mut node) = cur.take() {
+        let next = node.next.take();
+        node.next = pre;
+        pre = Some(node);
+        cur = next;
+
+    }
+
+    return pre;
+}
+
 #[test]
 fn test_reverse_list() {
     let mut head = Some(Box::new(ListNode{
@@ -156,7 +170,7 @@ fn test_reverse_list() {
       }
     }
 
-    let ret = reverse_list(head);
+    let ret = reverse_list_no_extra_space(head);
     for i in ret {
         println!("{}", i.val)
     }
