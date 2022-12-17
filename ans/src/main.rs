@@ -2908,7 +2908,21 @@ fn min_diff_in_bst(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 
 #[test]
 fn test_min_diff_in_bst() {
-    min_diff_in_bst(None);
+    let root = Rc::new(RefCell::new(TreeNode{
+        val: 4,
+        left: Some(Rc::new(RefCell::new(TreeNode{
+            val: 2,
+            left: None,
+            right: None,
+        }))),
+        right: Some(Rc::new(RefCell::new(TreeNode{
+            val: 6,
+            left: None,
+            right: None,
+        }))),
+    }));
+
+    min_diff_in_bst(Some(root));
 }
 
 /**
@@ -3443,7 +3457,7 @@ fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
 
 #[test]
 fn test_max_score() {
-    max_score(vec![], 1);
+    max_score(vec![1,2,3,4,5,6,1], 3);
 }
 
 /**
@@ -3742,7 +3756,8 @@ fn highest_peak(is_water: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
 
 #[test]
 fn test_highest_peak() {
-    highest_peak(vec![]);
+    // let is_water = vec![vec![0,1],vec![0,0]];
+    // highest_peak(is_water);
 }
 
 /**
