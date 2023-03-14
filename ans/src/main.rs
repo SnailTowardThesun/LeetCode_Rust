@@ -1,4 +1,5 @@
 mod offer;
+mod daily;
 
 use std::collections::HashMap;
 use std::option::Option;
@@ -10,10 +11,9 @@ use std::option::Option;
 *
 * Example:
 * Given nums = [2, 7, 11, 15], target = 9,
-
-* Because nums[0] + nums[1] = 2 + 7 = 9,
-* return [0, 1].
-*/
+ * Because nums[0] + nums[1] = 2 + 7 = 9,
+ * return [0, 1].
+ */
 
 fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let v: Vec<i32> = Vec::new();
@@ -38,6 +38,7 @@ fn test_two_sum() {
     assert_eq!(ans[0], 0);
     assert_eq!(ans[1], 1);
 }
+
 
 /**
  * 2. add two numbers
